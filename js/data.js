@@ -390,13 +390,13 @@ const DB = {
 
   getLookbookUrls() {
     const defaults = {
-      hero: "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1400&auto=format&fit=crop&q=80",
-      camisetas: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=700&auto=format&fit=crop&q=80",
-      sudaderas: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&auto=format&fit=crop&q=80",
-      pants: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=80",
-      chamarras: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
-      gorras: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80",
-      shorts: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=80"
+      hero:      "assets/img/tshirt_vintage.png",
+      camisetas: "assets/img/tshirt_white.png",
+      sudaderas: "assets/img/hoodie_peach.png",
+      pants:     "assets/img/joggers_tech.png",
+      chamarras: "assets/img/bomber_retro.png",
+      gorras:    "assets/img/cap_snapback.png",
+      shorts:    "assets/img/shorts_cargo.png"
     };
     const stored = localStorage.getItem("ct_lookbook_urls");
     return stored ? { ...defaults, ...JSON.parse(stored) } : defaults;
