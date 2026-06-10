@@ -80,19 +80,34 @@ const Cart = {
   },
 
   // --- 2. AÑADIR PRODUCTO Y ANIMACIÓN VOLADORA ---
-  async addToCart(productId, event = null) {
+  async addToCart(productId, event = null, talla = null, color = null) {
+    if (event) {
+      event.stopPropagation();
+    }
     const productos = await DB.getProductos();
     const producto = productos.find(p => p.id === productId);
     
     if (!producto) return;
 
-    // Verificar si el item ya está en el carrito
-    const itemExistente = this.items.find(item => item.producto.id === productId);
+    const finalTalla = talla || "M";
+    const finalColor = color || "Negro";
+
+    // Verificar si el item ya está en el carrito con la misma talla y color
+    const itemExistente = this.items.find(item => 
+      item.producto.id === productId && 
+      (item.talla || "M") === finalTalla && 
+      (item.color || "Negro") === finalColor
+    );
 
     if (itemExistente) {
       itemExistente.cantidad++;
     } else {
-      this.items.push({ producto, cantidad: 1 });
+      this.items.push({ 
+        producto, 
+        cantidad: 1, 
+        talla: finalTalla, 
+        color: finalColor 
+      });
     }
 
     this.saveCartToSession();
@@ -113,7 +128,7 @@ const Cart = {
       }
 
       this.animateFlyToCart(producto.imagen, button || event.target);
-      UI.showToast(`Añadido: ${producto.nombre}`, "success", 2000);
+      UI.showToast(`Añadido: ${producto.nombre} (${finalTalla} / ${finalColor})`, "success", 2000);
     } else {
       // Si se añade directo (ej. scanner), notificar de igual forma
       this.animateBadgePop();
@@ -178,13 +193,16 @@ const Cart = {
   },
 
   // --- 3. CAMBIAR CANTIDADES Y ELIMINAR ---
-  updateQuantity(productId, newQty) {
+  updateQuantity(itemKey, newQty) {
     if (newQty <= 0) {
-      this.removeItemWithAnim(productId);
+      this.removeItemWithAnim(itemKey);
       return;
     }
 
-    const item = this.items.find(i => i.producto.id === productId);
+    const item = this.items.find(i => {
+      const key = i.producto.id + "_" + (i.talla || "M") + "_" + (i.color || "Negro");
+      return key === itemKey;
+    });
     if (item) {
       item.cantidad = newQty;
       this.saveCartToSession();
@@ -193,8 +211,8 @@ const Cart = {
     }
   },
 
-  removeItemWithAnim(productId) {
-    const itemEl = document.querySelector(`.cart-item[data-id="${productId}"]`);
+  removeItemWithAnim(itemKey) {
+    const itemEl = document.querySelector(`.cart-item[data-key="${itemKey}"]`);
     if (itemEl) {
       // Iniciar colapso y desvanecimiento
       itemEl.style.opacity = "0";
@@ -204,13 +222,19 @@ const Cart = {
       itemEl.style.border = "none";
 
       setTimeout(() => {
-        this.items = this.items.filter(i => i.producto.id !== productId);
+        this.items = this.items.filter(i => {
+          const key = i.producto.id + "_" + (i.talla || "M") + "_" + (i.color || "Negro");
+          return key !== itemKey;
+        });
         this.saveCartToSession();
         this.updateBadge();
         this.renderCart();
       }, 400); // Duración de transición
     } else {
-      this.items = this.items.filter(i => i.producto.id !== productId);
+      this.items = this.items.filter(i => {
+        const key = i.producto.id + "_" + (i.talla || "M") + "_" + (i.color || "Negro");
+        return key !== itemKey;
+      });
       this.saveCartToSession();
       this.updateBadge();
       this.renderCart();
@@ -332,19 +356,26 @@ const Cart = {
     this.items.forEach(item => {
       const p = item.producto;
       const precioUnitario = p.price || p.precio;
+      const talla = item.talla || "M";
+      const color = item.color || "Negro";
+      const itemKey = `${p.id}_${talla}_${color}`;
+      
       html += `
-        <div class="cart-item" data-id="${p.id}">
+        <div class="cart-item" data-key="${itemKey}">
           <img src="${p.imagen}" alt="${p.nombre}" class="cart-item-img">
           <div class="cart-item-info">
             <h3 class="cart-item-name">${p.nombre}</h3>
+            <div class="cart-item-meta" style="font-size: 0.75rem; color: var(--color-texto-muted); margin-bottom: 5px;">
+              Talla: <span style="font-weight: 700; color: var(--color-texto);">${talla}</span> | Color: <span style="font-weight: 700; color: var(--color-texto);">${color}</span>
+            </div>
             <span class="cart-item-price">$${precioUnitario.toFixed(2)}</span>
             <div class="cart-item-qty-control">
-              <button class="qty-btn" onclick="Cart.updateQuantity('${p.id}', ${item.cantidad - 1})">-</button>
+              <button class="qty-btn" onclick="Cart.updateQuantity('${itemKey}', ${item.cantidad - 1})">-</button>
               <span class="cart-item-qty">${item.cantidad}</span>
-              <button class="qty-btn" onclick="Cart.updateQuantity('${p.id}', ${item.cantidad + 1})">+</button>
+              <button class="qty-btn" onclick="Cart.updateQuantity('${itemKey}', ${item.cantidad + 1})">+</button>
             </div>
           </div>
-          <button class="cart-item-remove-btn" onclick="Cart.removeItemWithAnim('${p.id}')">
+          <button class="cart-item-remove-btn" onclick="Cart.removeItemWithAnim('${itemKey}')">
             <i data-lucide="trash-2"></i>
           </button>
         </div>

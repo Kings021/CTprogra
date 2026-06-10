@@ -70,6 +70,10 @@ const UI = {
     if (modal) {
       modal.classList.add("hidden");
       document.body.style.overflow = "";
+      const content = modal.querySelector(".modal-content");
+      if (content) {
+        content.style.maxWidth = "";
+      }
     }
   },
 

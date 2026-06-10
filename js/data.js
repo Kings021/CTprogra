@@ -21,8 +21,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 450,
     codigoBarras: "7501001",
-    imagen: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Camiseta de corte oversized en algodón pesado de 240g con lavado vintage ácido negro."
+    imagen: "assets/img/tshirt_vintage.png",
+    descripcion: "Camiseta de corte oversized en algodón pesado de 240g con lavado vintage ácido negro.",
+    colores: [
+      { nombre: "Negro Ácido",   hex: "#1a1a1a" },
+      { nombre: "Gris Lavado",   hex: "#7c7c6e" },
+      { nombre: "Hueso",         hex: "#e8e0d0" },
+      { nombre: "Verde Militar", hex: "#4a5240" }
+    ]
   },
   {
     id: "prod-2",
@@ -30,8 +36,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 390,
     codigoBarras: "7501002",
-    imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Camiseta blanca de algodón orgánico, cuello cerrado y bordado minimalista C&Tees en el pecho."
+    imagen: "assets/img/tshirt_white.png",
+    descripcion: "Camiseta blanca de algodón orgánico, cuello cerrado y bordado minimalista C&Tees en el pecho.",
+    colores: [
+      { nombre: "Blanco Óptico", hex: "#f5f5f5" },
+      { nombre: "Arena",         hex: "#d4c5a9" },
+      { nombre: "Azul Niebla",   hex: "#b0c4d8" },
+      { nombre: "Rosa Palo",     hex: "#e8c4b8" }
+    ]
   },
   {
     id: "prod-3",
@@ -39,8 +51,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Pants",
     precio: 890,
     codigoBarras: "7501003",
-    imagen: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Pantalón cargo de gabardina con múltiples bolsillos y correas de ajuste táctico estilo techwear."
+    imagen: "assets/img/pants_cargo.png",
+    descripcion: "Pantalón cargo de gabardina con múltiples bolsillos y correas de ajuste táctico estilo techwear.",
+    colores: [
+      { nombre: "Negro Táctico", hex: "#0d0d0d" },
+      { nombre: "Caqui",         hex: "#8b7355" },
+      { nombre: "Gris Carbón",   hex: "#3a3a3a" },
+      { nombre: "Oliva Oscuro",  hex: "#3b3a28" }
+    ]
   },
   {
     id: "prod-4",
@@ -48,8 +66,13 @@ const PRODUCTOS_INICIALES = [
     categoria: "Pants",
     precio: 790,
     codigoBarras: "7501004",
-    imagen: "https://images.unsplash.com/photo-1517423568366-8b83523034fd?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Joggers ajustados repelentes al agua con cierres termosellados y tobilleras elásticas premium."
+    imagen: "assets/img/joggers_tech.png",
+    descripcion: "Joggers ajustados repelentes al agua con cierres termosellados y tobilleras elásticas premium.",
+    colores: [
+      { nombre: "Negro Total",   hex: "#080808" },
+      { nombre: "Grafito",       hex: "#2e2e2e" },
+      { nombre: "Azul Medianoche", hex: "#1a1f3a" }
+    ]
   },
   {
     id: "prod-5",
@@ -57,8 +80,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Chamarras",
     precio: 1250,
     codigoBarras: "7501005",
-    imagen: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Chamarra bomber satinada con forro acolchado naranja, parches bordados y fit holgado."
+    imagen: "assets/img/bomber_retro.png",
+    descripcion: "Chamarra bomber satinada con forro acolchado naranja, parches bordados y fit holgado.",
+    colores: [
+      { nombre: "Negro Satín",   hex: "#111111" },
+      { nombre: "Naranja Vintage", hex: "#c8581a" },
+      { nombre: "Borgoña",       hex: "#6b1a2a" },
+      { nombre: "Verde Botella", hex: "#2d4a2d" }
+    ]
   },
   {
     id: "prod-6",
@@ -66,8 +95,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Chamarras",
     precio: 1100,
     codigoBarras: "7501006",
-    imagen: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Chamarra de mezclilla gruesa con desgastados hechos a mano y botones metálicos grabados."
+    imagen: "assets/img/jacket_denim.png",
+    descripcion: "Chamarra de mezclilla gruesa con desgastados hechos a mano y botones metálicos grabados.",
+    colores: [
+      { nombre: "Índigo",        hex: "#2a3f6f" },
+      { nombre: "Azul Claro",    hex: "#4a7aaa" },
+      { nombre: "Azul Oscuro",   hex: "#1a2a4a" },
+      { nombre: "Gris Denim",    hex: "#5a6a7a" }
+    ]
   },
   {
     id: "prod-7",
@@ -75,8 +110,15 @@ const PRODUCTOS_INICIALES = [
     categoria: "Gorras",
     precio: 350,
     codigoBarras: "7501007",
-    imagen: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Gorra estructurada de 6 paneles con visera plana y broche ajustable clásico de alta resistencia."
+    imagen: "assets/img/cap_snapback.png",
+    descripcion: "Gorra estructurada de 6 paneles con visera plana y broche ajustable clásico de alta resistencia.",
+    colores: [
+      { nombre: "Negro",         hex: "#111111" },
+      { nombre: "Rojo Street",   hex: "#c0392b" },
+      { nombre: "Blanco",        hex: "#f0f0f0" },
+      { nombre: "Navy",          hex: "#1a2a4a" },
+      { nombre: "Camo",          hex: "#4a5240" }
+    ]
   },
   {
     id: "prod-8",
@@ -84,8 +126,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Gorras",
     precio: 290,
     codigoBarras: "7501008",
-    imagen: "https://images.unsplash.com/photo-1576871337622-98d48d4aa53e?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Gorro tejido de punto acrílico de alta densidad en tono acento coral brillante C&Tees."
+    imagen: "assets/img/beanie_coral.png",
+    descripcion: "Gorro tejido de punto acrílico de alta densidad en tono acento coral brillante C&Tees.",
+    colores: [
+      { nombre: "Coral Neón",    hex: "#ff6b6b" },
+      { nombre: "Amarillo Neon", hex: "#f9e54b" },
+      { nombre: "Menta",         hex: "#5ddfb0" },
+      { nombre: "Lila",          hex: "#b48fde" }
+    ]
   },
   {
     id: "prod-9",
@@ -93,8 +141,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Shorts",
     precio: 420,
     codigoBarras: "7501009",
-    imagen: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Shorts deportivos de malla transpirable con jareta de contraste y logotipo reflectivo."
+    imagen: "assets/img/shorts_mesh.png",
+    descripcion: "Shorts deportivos de malla transpirable con jareta de contraste y logotipo reflectivo.",
+    colores: [
+      { nombre: "Negro",         hex: "#111111" },
+      { nombre: "Gris Sport",    hex: "#808080" },
+      { nombre: "Azul Royal",    hex: "#2255cc" },
+      { nombre: "Rojo Fire",     hex: "#cc2222" }
+    ]
   },
   {
     id: "prod-10",
@@ -102,8 +156,14 @@ const PRODUCTOS_INICIALES = [
     categoria: "Shorts",
     precio: 550,
     codigoBarras: "7501010",
-    imagen: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Shorts de corte relajado tipo cargo en tejido de sarga resistente con cinturón integrado."
+    imagen: "assets/img/shorts_cargo.png",
+    descripcion: "Shorts de corte relajado tipo cargo en tejido de sarga resistente con cinturón integrado.",
+    colores: [
+      { nombre: "Caqui",         hex: "#9b8b6a" },
+      { nombre: "Negro",         hex: "#111111" },
+      { nombre: "Oliva",         hex: "#5a6040" },
+      { nombre: "Gris",          hex: "#5a5a5a" }
+    ]
   },
   {
     id: "prod-11",
@@ -111,8 +171,15 @@ const PRODUCTOS_INICIALES = [
     categoria: "Sudaderas",
     precio: 950,
     codigoBarras: "7501011",
-    imagen: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Sudadera con capucha en felpa francesa color durazno pastel, gorro de doble capa sin cordones."
+    imagen: "assets/img/hoodie_peach.png",
+    descripcion: "Sudadera con capucha en felpa francesa color durazno pastel, gorro de doble capa sin cordones.",
+    colores: [
+      { nombre: "Durazno",       hex: "#f4a67d" },
+      { nombre: "Lavanda",       hex: "#c3a8d1" },
+      { nombre: "Celeste",       hex: "#a8d1e7" },
+      { nombre: "Menta",         hex: "#a8d8b9" },
+      { nombre: "Lemon",         hex: "#f0e68c" }
+    ]
   },
   {
     id: "prod-12",
@@ -120,8 +187,13 @@ const PRODUCTOS_INICIALES = [
     categoria: "Sudaderas",
     precio: 850,
     codigoBarras: "7501012",
-    imagen: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&auto=format&fit=crop&q=80",
-    descripcion: "Sudadera de cuello redondo con tejido jacquard gráfico experimental en blanco y negro."
+    imagen: "assets/img/crewneck_graphic.png",
+    descripcion: "Sudadera de cuello redondo con tejido jacquard gráfico experimental en blanco y negro.",
+    colores: [
+      { nombre: "Blanco/Negro",  hex: "#f0f0f0" },
+      { nombre: "Negro/Blanco",  hex: "#1a1a1a" },
+      { nombre: "Gris Marl",     hex: "#9a9a8a" }
+    ]
   }
 ];
 
@@ -134,6 +206,24 @@ const DB = {
         const productos = await this.getProductos();
         if (productos.length === 0) {
           await this.guardarAlmacen("ct_productos", PRODUCTOS_INICIALES);
+        } else {
+          // Sincronizar imágenes iniciales locales en Supabase si ya existe la tabla
+          let updated = false;
+          const updatedProds = productos.map(p => {
+            const matchingInicial = PRODUCTOS_INICIALES.find(initP => initP.id === p.id);
+            if (matchingInicial && p.imagen !== matchingInicial.imagen) {
+              p.imagen = matchingInicial.imagen;
+              updated = true;
+            }
+            if (matchingInicial && JSON.stringify(p.colores) !== JSON.stringify(matchingInicial.colores)) {
+              p.colores = matchingInicial.colores;
+              updated = true;
+            }
+            return p;
+          });
+          if (updated) {
+            await this.guardarAlmacen("ct_productos", updatedProds);
+          }
         }
 
         // Intentar autoinicializar usuarios en Supabase si la tabla está vacía
@@ -156,6 +246,29 @@ const DB = {
     // Inicializar localStorage como contingencia
     if (!localStorage.getItem("ct_productos")) {
       localStorage.setItem("ct_productos", JSON.stringify(PRODUCTOS_INICIALES));
+    } else {
+      // Sincronizar imágenes iniciales locales en localStorage
+      try {
+        let prods = JSON.parse(localStorage.getItem("ct_productos"));
+        let updated = false;
+        prods = prods.map(p => {
+          const matchingInicial = PRODUCTOS_INICIALES.find(initP => initP.id === p.id);
+          if (matchingInicial && p.imagen !== matchingInicial.imagen) {
+            p.imagen = matchingInicial.imagen;
+            updated = true;
+          }
+          if (matchingInicial && JSON.stringify(p.colores) !== JSON.stringify(matchingInicial.colores)) {
+            p.colores = matchingInicial.colores;
+            updated = true;
+          }
+          return p;
+        });
+        if (updated) {
+          localStorage.setItem("ct_productos", JSON.stringify(prods));
+        }
+      } catch (err) {
+        console.error("Error al actualizar imágenes locales en localStorage:", err);
+      }
     }
     if (!localStorage.getItem("ct_usuarios")) {
       localStorage.setItem("ct_usuarios", JSON.stringify([{ nombre: "Alessandro Vázquez", usuario: "admin", contrasena: "12345" }]));
@@ -273,6 +386,36 @@ const DB = {
   getSesionActiva() {
     const sesion = localStorage.getItem("ct_sesion_activa");
     return sesion ? JSON.parse(sesion) : null;
+  },
+
+  getLookbookUrls() {
+    const defaults = {
+      hero: "https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1400&auto=format&fit=crop&q=80",
+      camisetas: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=700&auto=format&fit=crop&q=80",
+      sudaderas: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&auto=format&fit=crop&q=80",
+      pants: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=80",
+      chamarras: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
+      gorras: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80",
+      shorts: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=80"
+    };
+    const stored = localStorage.getItem("ct_lookbook_urls");
+    return stored ? { ...defaults, ...JSON.parse(stored) } : defaults;
+  },
+
+  saveLookbookUrls(urls) {
+    localStorage.setItem("ct_lookbook_urls", JSON.stringify(urls));
+    return true;
+  },
+
+  async updateProductImage(productId, newUrl) {
+    const productos = await this.getProductos();
+    const prod = productos.find(p => p.id === productId);
+    if (prod) {
+      prod.imagen = newUrl;
+      await this.guardarAlmacen("ct_productos", productos);
+      return true;
+    }
+    return false;
   },
 
   eliminarSesion() {

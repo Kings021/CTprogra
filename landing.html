@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C&Tees | Luxury Streetwear Editorial</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Explora la nueva era del streetwear de lujo con C&Tees. Diseños urbanos de alta calidad, siluetas holgadas y colecciones exclusivas de edición limitada.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="css/landing.css">
+</head>
+<body class="loading-active">
+
+  <!-- CURSOR PERSONALIZADO INMERSIVO -->
+  <div class="landing-cursor" id="landing-cursor"></div>
+  <div class="landing-cursor-follower" id="landing-cursor-follower"></div>
+
+  <!-- PANTALLA DE CARGA (INTRO PRELOADER) -->
+  <section class="landing-loader" id="landing-loader">
+    <div class="loader-bg-overlay"></div>
+    <div class="loader-content">
+      <div class="loader-logo-wrap">
+        <h1 class="loader-brand-title">C&TEES</h1>
+        <p class="loader-brand-subtitle">URBAN LUXURY EDITORIAL</p>
+      </div>
+      <div class="loader-progress-wrap">
+        <div class="loader-progress-bar">
+          <div class="loader-progress-fill" id="loader-fill"></div>
+        </div>
+        <div class="loader-progress-text"><span id="loader-percent">0</span>%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAVBAR MINIMALISTA -->
+  <nav class="landing-nav" id="landing-nav">
+    <a href="#" class="nav-logo">C&TEES</a>
+    <div class="nav-links">
+      <a href="#landing-concept" class="nav-link-item hover-target">EL CONCEPTO</a>
+      <a href="#landing-lookbook" class="nav-link-item hover-target">LOOKBOOK</a>
+      <a href="#landing-showcase" class="nav-link-item hover-target">COLECCIÓN</a>
+    </div>
+    <a href="index.html" class="nav-cta-btn hover-target" id="nav-cta-enter">INGRESAR</a>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="landing-hero" id="landing-hero">
+    <div class="hero-bg-container">
+      <div class="hero-bg-overlay"></div>
+      <img src="https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1600&auto=format&fit=crop&q=80" alt="Streetwear Hero" class="hero-bg-image" id="hero-img">
+    </div>
+    
+    <div class="hero-content">
+      <div class="hero-title-wrap">
+        <h2 class="hero-subline">TEMPORADA 2026</h2>
+        <h1 class="hero-main-title">STREETWEAR<br><span class="outlined-text">REDEFINIDO</span></h1>
+      </div>
+      
+      <div class="hero-footer">
+        <p class="hero-description">Siluetas holgadas de gramaje pesado y cortes geométricos inspirados en la arquitectura brutalista y el asfalto de la gran ciudad.</p>
+        <div class="hero-actions">
+          <a href="index.html" class="btn btn-primary btn-landing-cta hover-target" id="hero-cta-enter">
+            <span>EXPLORAR COLECCIÓN</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicador de Scroll -->
+    <div class="scroll-indicator">
+      <span class="scroll-text">SCROLL DOWN</span>
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIÓN: EL CONCEPTO -->
+  <section class="landing-concept" id="landing-concept">
+    <div class="container">
+      <div class="concept-layout">
+        <div class="concept-text-col">
+          <h3 class="section-tag">EL CONCEPTO</h3>
+          <h2 class="concept-title animate-text">Nuestra visión no sigue tendencias; crea un registro atemporal en el tejido urbano.</h2>
+          <p class="concept-body">Cada prenda es concebida como un lienzo de alta densidad. Seleccionamos algodón orgánico de 240g a 450g para asegurar caídas perfectas y estructuras rígidas que resisten el desgaste diario del entorno metropolitano.</p>
+        </div>
+        <div class="concept-image-col">
+          <div class="parallax-img-wrap hover-target" data-speed="0.1">
+            <div class="img-reveal-overlay"></div>
+            <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=1000&auto=format&fit=crop&q=80" alt=" Streetwear Look" class="parallax-image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: LOOKBOOK HORIZONTAL (SCROLL FIJADO) -->
+  <section class="landing-lookbook" id="landing-lookbook">
+    <div class="lookbook-sticky-wrap">
+      <div class="lookbook-horizontal-scroll" id="lookbook-scroll-container">
+        
+        <!-- Slide 1: Título de Lookbook -->
+        <div class="lookbook-slide title-slide">
+          <div class="slide-content-wrap">
+            <h3 class="section-tag">EDITORIAL 2026</h3>
+            <h2 class="slide-main-heading">C&TEES<br><span class="outlined-text">LOOKBOOK</span></h2>
+            <p class="slide-subtext">Un viaje visual a través de las siluetas esenciales de la colección en escala de grises y texturas crudas.</p>
+          </div>
+        </div>
+
+        <!-- Slide 2: Imagen 1 -->
+        <div class="lookbook-slide image-slide">
+          <div class="slide-img-box hover-target">
+            <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=1000&auto=format&fit=crop&q=80" alt="Oversized Vintage Tee" class="slide-img">
+            <div class="slide-info">
+              <span class="slide-num">01</span>
+              <h4 class="slide-title">VINTAGE OVERSIZED SHAPE</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Imagen 2 -->
+        <div class="lookbook-slide image-slide">
+          <div class="slide-img-box hover-target">
+            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1000&auto=format&fit=crop&q=80" alt="Crewneck Knit" class="slide-img">
+            <div class="slide-info">
+              <span class="slide-num">02</span>
+              <h4 class="slide-title">CREWNECK HEAVY COTTON</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Imagen 3 -->
+        <div class="lookbook-slide image-slide">
+          <div class="slide-img-box hover-target">
+            <img src="https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=1000&auto=format&fit=crop&q=80" alt="Denim Details" class="slide-img">
+            <div class="slide-info">
+              <span class="slide-num">03</span>
+              <h4 class="slide-title">RAW DISTRESSED DENIM</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Imagen 4 -->
+        <div class="lookbook-slide image-slide">
+          <div class="slide-img-box hover-target">
+            <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=1000&auto=format&fit=crop&q=80" alt="Tactical Pants" class="slide-img">
+            <div class="slide-info">
+              <span class="slide-num">04</span>
+              <h4 class="slide-title">TACTICAL CARGO GEOMETRY</h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: SHOWCASE DE PRENDAS DESTACADAS -->
+  <section class="landing-showcase" id="landing-showcase">
+    <div class="container">
+      <div class="showcase-header">
+        <h3 class="section-tag">DESTACADOS</h3>
+        <h2 class="showcase-title">PIEZAS CLAVE DE TEMPORADA</h2>
+      </div>
+
+      <div class="showcase-grid">
+        <!-- Tarjeta 1 -->
+        <div class="showcase-card hover-target" data-tilt>
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&auto=format&fit=crop&q=80" alt="Vintage Hoodie" class="card-img">
+            <span class="card-price">$950 MXN</span>
+          </div>
+          <div class="card-body">
+            <span class="card-category">SUDADERAS</span>
+            <h4 class="card-title">Hoodie Pastel Peach</h4>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="showcase-card hover-target" data-tilt>
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1517423568366-8b83523034fd?w=600&auto=format&fit=crop&q=80" alt="Joggers" class="card-img">
+            <span class="card-price">$790 MXN</span>
+          </div>
+          <div class="card-body">
+            <span class="card-category">PANTS</span>
+            <h4 class="card-title">Joggers Techwear Black</h4>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="showcase-card hover-target" data-tilt>
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop&q=80" alt="Bomber Jacket" class="card-img">
+            <span class="card-price">$1250 MXN</span>
+          </div>
+          <div class="card-body">
+            <span class="card-category">CHAMARRAS</span>
+            <h4 class="card-title">Retro Bomber Jacket</h4>
+          </div>
+        </div>
+
+        <!-- Tarjeta 4 -->
+        <div class="showcase-card hover-target" data-tilt>
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80" alt="Vintage Tee" class="card-img">
+            <span class="card-price">$450 MXN</span>
+          </div>
+          <div class="card-body">
+            <span class="card-category">CAMISETAS</span>
+            <h4 class="card-title">T-Shirt Oversized Vintage</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / LLAMADO A LA ACCIÓN FINAL -->
+  <footer class="landing-footer" id="landing-footer">
+    <div class="footer-bg-glow"></div>
+    <div class="container">
+      <div class="footer-cta-wrap">
+        <h2 class="footer-heading animate-text">EXPLORA LA EXPERIENCIA COMPLETA</h2>
+        
+        <!-- Botón Magnético Interactivo -->
+        <div class="magnetic-wrap hover-target" id="magnetic-container">
+          <a href="index.html" class="magnetic-btn" id="magnetic-btn">
+            <span class="magnetic-btn-text">ENTRAR A LA TIENDA</span>
+            <span class="magnetic-btn-bg"></span>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <span class="copyright">© 2026 C&TEES. ALL RIGHTS RESERVED.</span>
+        <div class="social-links">
+          <a href="#" class="social-item hover-target">INSTAGRAM</a>
+          <a href="#" class="social-item hover-target">TIKTOK</a>
+          <a href="#" class="social-item hover-target">PINTEREST</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- GSAP Animation Library + ScrollTrigger Plugin CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <!-- Custom JS Logic -->
+  <script src="js/landing.js"></script>
+</body>
+</html>

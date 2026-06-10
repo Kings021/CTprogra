@@ -100,9 +100,9 @@ const App = {
     const navLinks = document.querySelectorAll(".nav-link");
     navLinks.forEach(link => {
       link.addEventListener("click", (e) => {
-        e.preventDefault();
         const target = link.getAttribute("data-target");
         if (target) {
+          e.preventDefault();
           this.navigateTo(target);
           this.closeSidebar();
         }
@@ -237,6 +237,9 @@ const App = {
 
   onScreenLoaded(screenId) {
     // Gatillo para pantallas específicas
+    if (screenId === "home") {
+      this.loadLookbookImages();
+    }
     if (screenId === "catalog" && typeof Catalog !== 'undefined') {
       Catalog.renderCatalog();
     }
@@ -310,6 +313,26 @@ const App = {
     this.hideAppLayout();
     this.navigateTo("auth");
     UI.showToast("Sesión cerrada correctamente", "info");
+  },
+
+  // --- 6. GESTIÓN DE IMÁGENES LOOKBOOK ---
+  loadLookbookImages() {
+    const urls = DB.getLookbookUrls();
+    const mapping = {
+      "home-hero-img": urls.hero,
+      "home-img-camisetas": urls.camisetas,
+      "home-img-sudaderas": urls.sudaderas,
+      "home-img-pants": urls.pants,
+      "home-img-chamarras": urls.chamarras,
+      "home-img-gorras": urls.gorras,
+      "home-img-shorts": urls.shorts
+    };
+    for (const [id, url] of Object.entries(mapping)) {
+      const img = document.getElementById(id);
+      if (img && url) {
+        img.src = url;
+      }
+    }
   }
 };
 
@@ -336,6 +359,208 @@ const Catalog = {
     // Forzar desvanecer renderizado viejo y refrescar catálogo
     this.renderCatalog(true);
     App.navigateTo("catalog");
+  },
+
+  getCarouselImages(p) {
+    const defaultSlides = {
+      "Camisetas": [
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=700&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=700&auto=format&fit=crop&q=80"
+      ],
+      "Sudaderas": [
+        "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=700&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1621905252507-b354bc25edac?w=700&auto=format&fit=crop&q=80"
+      ],
+      "Pants": [
+        "https://images.unsplash.com/photo-1517423568366-8b83523034fd?w=700&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=700&auto=format&fit=crop&q=80"
+      ],
+      "Chamarras": [
+        "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=700&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&auto=format&fit=crop&q=80"
+      ],
+      "Gorras": [
+        "https://images.unsplash.com/photo-1576871337622-98d48d4aa53e?w=700&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1534215754734-18e55d13ce35?w=700&auto=format&fit=crop&q=80"
+      ],
+      "Shorts": [
+        "https://images.unsplash.com/photo-1539185441755-769473a23570?w=700&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=700&auto=format&fit=crop&q=80"
+      ]
+    };
+    const categorySlides = defaultSlides[p.categoria] || [
+      "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=700&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&auto=format&fit=crop&q=80"
+    ];
+    return [p.imagen, ...categorySlides];
+  },
+
+  async showProductDetail(productId) {
+    const productos = await DB.getProductos();
+    const p = productos.find(prod => prod.id === productId);
+    if (!p) return;
+
+    // Agrandar modal para detalles
+    const modal = document.getElementById("general-modal");
+    const content = modal?.querySelector(".modal-content");
+    if (content) {
+      content.style.maxWidth = "900px";
+    }
+
+    // Registrar funciones globales para interactividad
+    window.moveModalCarousel = (direction) => {
+      const track = document.getElementById("modal-carousel-track");
+      if (!track) return;
+      const slides = track.querySelectorAll(".carousel-slide");
+      let activeIndex = parseInt(track.getAttribute("data-active-index") || "0");
+      
+      activeIndex += direction;
+      if (activeIndex < 0) activeIndex = slides.length - 1;
+      if (activeIndex >= slides.length) activeIndex = 0;
+      
+      track.setAttribute("data-active-index", activeIndex);
+      track.style.transform = `translateX(-${activeIndex * (100 / slides.length)}%)`;
+      
+      const dots = document.querySelectorAll(".carousel-dot");
+      dots.forEach((dot, idx) => {
+        if (idx === activeIndex) {
+          dot.classList.add("active");
+          dot.style.background = "var(--color-acento)";
+        } else {
+          dot.classList.remove("active");
+          dot.style.background = "#ccc";
+        }
+      });
+    };
+
+    window.selectModalSize = (size, btn) => {
+      const parent = btn.parentElement;
+      parent.querySelectorAll(".size-select-btn").forEach(b => {
+        b.classList.remove("active");
+        b.style.background = "transparent";
+        b.style.borderColor = "#ccc";
+        b.style.color = "var(--color-texto)";
+      });
+      btn.classList.add("active");
+      btn.style.background = "var(--color-acento)";
+      btn.style.borderColor = "var(--color-acento)";
+      btn.style.color = "#fff";
+    };
+
+    window.selectModalColor = (colorName, btn) => {
+      const parent = btn.closest('.color-swatches-row');
+      parent.querySelectorAll('.color-swatch-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.outline = 'none';
+        b.style.outlineOffset = '0px';
+        b.style.transform = 'scale(1)';
+      });
+      btn.classList.add('active');
+      btn.style.outline = '2.5px solid var(--color-acento)';
+      btn.style.outlineOffset = '3px';
+      btn.style.transform = 'scale(1.18)';
+      const label = document.getElementById('color-selected-label');
+      if (label) label.textContent = colorName;
+    };
+
+    const images = this.getCarouselImages(p);
+    const title = p.nombre.toUpperCase();
+    const bodyHTML = `
+      <div class="product-detail-modal-layout" style="display: flex; gap: 30px; align-items: start; flex-wrap: wrap; text-align: left;">
+        <div class="product-detail-img-wrap" style="flex: 1; min-width: 250px; background: var(--color-secundario); border: var(--border-glow); padding: 10px; position: relative;">
+          <!-- Carousel Container -->
+          <div class="modal-carousel-container" style="position: relative; overflow: hidden; width: 100%; height: 320px;">
+            <!-- Carousel Track -->
+            <div id="modal-carousel-track" data-active-index="0" style="display: flex; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); width: 300%; height: 100%; transform: translateX(0%);">
+              <div class="carousel-slide" style="width: 33.333%; height: 100%; flex-shrink: 0;"><img src="${images[0]}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div class="carousel-slide" style="width: 33.333%; height: 100%; flex-shrink: 0;"><img src="${images[1]}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div class="carousel-slide" style="width: 33.333%; height: 100%; flex-shrink: 0;"><img src="${images[2]}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover;"></div>
+            </div>
+            
+            <!-- Floating Arrows -->
+            <button onclick="moveModalCarousel(-1)" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: var(--border-glow); background: rgba(255,255,255,0.85); color: var(--color-texto); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; z-index: 10;"><i data-lucide="chevron-left" style="width:18px; height:18px;"></i></button>
+            <button onclick="moveModalCarousel(1)" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: var(--border-glow); background: rgba(255,255,255,0.85); color: var(--color-texto); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; z-index: 10;"><i data-lucide="chevron-right" style="width:18px; height:18px;"></i></button>
+            
+            <!-- Indicators / Dots -->
+            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10;">
+              <span class="carousel-dot active" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-acento); transition: 0.2s; display: inline-block;"></span>
+              <span class="carousel-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #ccc; transition: 0.2s; display: inline-block;"></span>
+              <span class="carousel-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #ccc; transition: 0.2s; display: inline-block;"></span>
+            </div>
+          </div>
+        </div>
+        <div class="product-detail-info" style="flex: 1.2; min-width: 250px; display: flex; flex-direction: column; gap: 15px;">
+          <span style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; color: var(--color-texto-muted); text-transform: uppercase;">${p.categoria}</span>
+          <h2 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 800; color: var(--color-texto); line-height: 1.1; margin: 0;">${p.nombre}</h2>
+          <span style="font-family: var(--font-title); font-size: 1.4rem; font-weight: 700; color: var(--color-acento);">$${p.precio || p.price} MXN</span>
+          
+          <!-- Selección de Talla -->
+          <div class="selector-group" style="margin-top: 5px;">
+            <span style="font-family: var(--font-body); font-size: 0.8rem; font-weight: 700; color: var(--color-texto); display: block; margin-bottom: 8px;">TALLA</span>
+            <div style="display: flex; gap: 8px;">
+              <button class="size-select-btn active" onclick="selectModalSize('S', this)" style="width: 40px; height: 40px; border: 1.5px solid var(--color-acento); background: var(--color-acento); color: #fff; font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s;">S</button>
+              <button class="size-select-btn" onclick="selectModalSize('M', this)" style="width: 40px; height: 40px; border: 1.5px solid #ccc; background: transparent; color: var(--color-texto); font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s;">M</button>
+              <button class="size-select-btn" onclick="selectModalSize('L', this)" style="width: 40px; height: 40px; border: 1.5px solid #ccc; background: transparent; color: var(--color-texto); font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s;">L</button>
+              <button class="size-select-btn" onclick="selectModalSize('XL', this)" style="width: 40px; height: 40px; border: 1.5px solid #ccc; background: transparent; color: var(--color-texto); font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.2s;">XL</button>
+            </div>
+          </div>
+
+          <!-- Selección de Color Dinámica -->
+          <div class="selector-group" style="margin-top: 5px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+              <span style="font-family: var(--font-body); font-size: 0.8rem; font-weight: 700; color: var(--color-texto); text-transform: uppercase; letter-spacing: 1px;">Color</span>
+              <span id="color-selected-label" style="font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; color: var(--color-acento); transition: 0.2s;">${(p.colores && p.colores[0]) ? p.colores[0].nombre : '—'}</span>
+            </div>
+            <div class="color-swatches-row" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+              ${(p.colores || []).map((c, i) => `
+                <button
+                  class="color-swatch-btn${i === 0 ? ' active' : ''}"
+                  title="${c.nombre}"
+                  onclick="selectModalColor('${c.nombre}', this)"
+                  style="
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: ${c.hex};
+                    border: 2px solid rgba(255,255,255,0.18);
+                    cursor: pointer;
+                    transition: transform 0.18s ease, outline 0.18s ease;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+                    ${i === 0 ? 'outline: 2.5px solid var(--color-acento); outline-offset: 3px; transform: scale(1.18);' : ''}
+                    flex-shrink: 0;
+                  "
+                ></button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid rgba(0,0,0,0.08); padding-top: 15px; margin-top: 5px;">
+            <p style="font-family: var(--font-body); font-size: 0.9rem; line-height: 1.6; color: var(--color-texto-muted); margin-bottom: 10px;">
+              ${p.descripcion || "Sin descripción disponible."}
+            </p>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--color-texto-muted);">
+            <i data-lucide="barcode" style="width: 16px; height: 16px;"></i>
+            <span>Código de Barras: <strong>${p.codigoBarras}</strong></span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const footerHTML = `
+      <button class="btn btn-outline" onclick="UI.closeModal()">Cerrar</button>
+      <button class="btn btn-primary" onclick="const size = document.querySelector('.size-select-btn.active')?.innerText || 'M'; const color = document.getElementById('color-selected-label')?.textContent || '${(p.colores && p.colores[0]) ? p.colores[0].nombre : 'N/A'}'; Cart.addToCart('${p.id}', null, size, color); UI.closeModal();">
+        <i data-lucide="shopping-cart" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:8px;"></i>
+        Añadir al Carrito
+      </button>
+    `;
+
+    UI.showModal(title, bodyHTML, footerHTML);
+    
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
   },
 
   init() {
@@ -475,7 +700,7 @@ const Catalog = {
       }
 
       html += `
-        <div class="product-card stagger-item visible" data-id="${p.id}" style="transition-delay: ${idx * 0.03}s;">
+        <div class="product-card stagger-item visible" data-id="${p.id}" onclick="Catalog.showProductDetail('${p.id}')" style="transition-delay: ${idx * 0.03}s;">
           <div class="product-card-img-wrapper">
             <img src="${p.imagen}" alt="${p.nombre}" class="product-card-img" loading="lazy">
             <div class="product-card-overlay">
@@ -548,6 +773,169 @@ const Admin = {
   initAdminScreen() {
     this.setupListeners();
     this.renderPreview();
+    this.setupImageTab();
+  },
+
+  switchTab(tabId) {
+    const tabProd = document.getElementById("admin-tab-prod");
+    const tabImages = document.getElementById("admin-tab-images");
+    const panelProd = document.getElementById("admin-panel-prod");
+    const panelImages = document.getElementById("admin-panel-images");
+
+    if (tabId === "prod") {
+      tabProd?.classList.add("active");
+      tabImages?.classList.remove("active");
+      if (panelProd) {
+        panelProd.style.display = "";
+        panelProd.classList.add("active");
+      }
+      if (panelImages) {
+        panelImages.style.display = "none";
+        panelImages.classList.remove("active");
+      }
+    } else if (tabId === "images") {
+      tabProd?.classList.remove("active");
+      tabImages?.classList.add("active");
+      if (panelProd) {
+        panelProd.style.display = "none";
+        panelProd.classList.remove("active");
+      }
+      if (panelImages) {
+        panelImages.style.display = "";
+        panelImages.classList.add("active");
+      }
+    }
+  },
+
+  async setupImageTab() {
+    // 1. Cargar URLs de Lookbook y llenar los inputs
+    const lookbook = DB.getLookbookUrls();
+    const mapping = {
+      "edit-img-hero": lookbook.hero,
+      "edit-img-camisetas": lookbook.camisetas,
+      "edit-img-sudaderas": lookbook.sudaderas,
+      "edit-img-pants": lookbook.pants,
+      "edit-img-chamarras": lookbook.chamarras,
+      "edit-img-gorras": lookbook.gorras,
+      "edit-img-shorts": lookbook.shorts
+    };
+    for (const [id, val] of Object.entries(mapping)) {
+      const input = document.getElementById(id);
+      if (input) {
+        input.value = val || "";
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+
+    // 2. Cargar prendas en el select
+    const select = document.getElementById("edit-prod-select");
+    if (select) {
+      const currentSelected = select.value;
+      select.innerHTML = '<option value="" disabled selected hidden></option>';
+      
+      const productos = await DB.getProductos();
+      productos.forEach(p => {
+        const option = document.createElement("option");
+        option.value = p.id;
+        option.textContent = `${p.nombre} (${p.codigoBarras})`;
+        select.appendChild(option);
+      });
+
+      if (currentSelected && productos.some(p => p.id === currentSelected)) {
+        select.value = currentSelected;
+      } else {
+        select.value = "";
+      }
+      this.loadSelectedProductImage();
+    }
+  },
+
+  async loadSelectedProductImage() {
+    const select = document.getElementById("edit-prod-select");
+    const productId = select?.value;
+    const preview = document.getElementById("selected-prod-img-preview");
+    const placeholder = document.getElementById("selected-prod-img-placeholder");
+    const urlInput = document.getElementById("edit-prod-image-url");
+
+    if (!productId) {
+      if (preview) preview.style.display = "none";
+      if (placeholder) placeholder.style.display = "";
+      if (urlInput) {
+        urlInput.value = "";
+        urlInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      return;
+    }
+
+    const productos = await DB.getProductos();
+    const prod = productos.find(p => p.id === productId);
+    if (prod) {
+      if (preview) {
+        preview.src = prod.imagen;
+        preview.style.display = "block";
+      }
+      if (placeholder) placeholder.style.display = "none";
+      if (urlInput) {
+        urlInput.value = prod.imagen;
+        urlInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    } else {
+      if (preview) preview.style.display = "none";
+      if (placeholder) placeholder.style.display = "";
+      if (urlInput) {
+        urlInput.value = "";
+        urlInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+  },
+
+  saveLookbook() {
+    const urls = {
+      hero: document.getElementById("edit-img-hero")?.value.trim(),
+      camisetas: document.getElementById("edit-img-camisetas")?.value.trim(),
+      sudaderas: document.getElementById("edit-img-sudaderas")?.value.trim(),
+      pants: document.getElementById("edit-img-pants")?.value.trim(),
+      chamarras: document.getElementById("edit-img-chamarras")?.value.trim(),
+      gorras: document.getElementById("edit-img-gorras")?.value.trim(),
+      shorts: document.getElementById("edit-img-shorts")?.value.trim()
+    };
+
+    if (Object.values(urls).some(url => !url)) {
+      UI.showToast("Todos los campos de Lookbook son requeridos", "warning");
+      return;
+    }
+
+    DB.saveLookbookUrls(urls);
+    if (typeof App.loadLookbookImages === 'function') {
+      App.loadLookbookImages();
+    }
+    UI.showToast("Portadas del Lookbook actualizadas correctamente", "success");
+  },
+
+  async saveProductImage() {
+    const select = document.getElementById("edit-prod-select");
+    const productId = select?.value;
+    const newUrl = document.getElementById("edit-prod-image-url")?.value.trim();
+
+    if (!productId) {
+      UI.showToast("Selecciona una prenda válida", "warning");
+      return;
+    }
+    if (!newUrl) {
+      UI.showToast("Por favor ingresa la nueva URL de la imagen", "warning");
+      return;
+    }
+
+    const success = await DB.updateProductImage(productId, newUrl);
+    if (success) {
+      UI.showToast("Imagen de prenda actualizada correctamente", "success");
+      if (typeof Catalog !== 'undefined') {
+        Catalog.hasLoadedOnce = false;
+      }
+      this.loadSelectedProductImage();
+    } else {
+      UI.showToast("No se pudo actualizar la imagen", "error");
+    }
   },
 
   setupListeners() {
@@ -590,6 +978,24 @@ const Admin = {
       e.preventDefault();
       this.saveProduct(form);
     });
+
+    // Formulario Lookbook Submit
+    const lookbookForm = document.getElementById("admin-lookbook-form");
+    if (lookbookForm) {
+      lookbookForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.saveLookbook();
+      });
+    }
+
+    // Formulario Producto Image Submit
+    const prodImgForm = document.getElementById("admin-prod-images-form");
+    if (prodImgForm) {
+      prodImgForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.saveProductImage();
+      });
+    }
 
     this.listenersSetup = true;
   },
@@ -684,6 +1090,9 @@ const Admin = {
 
     // Actualizar estado del catálogo para forzar recarga en el próximo render
     Catalog.hasLoadedOnce = false;
+
+    // Actualizar también la lista de prendas de la pestaña de imágenes para incluir la nueva
+    this.setupImageTab();
 
     UI.showToast("Prenda registrada correctamente", "success");
   }
