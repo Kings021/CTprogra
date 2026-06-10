@@ -1,0 +1,15 @@
+{
+  "name": "ctees-app",
+  "version": "1.0.0",
+  "description": "C&Tees SPA Clothing Store for CBTA 197",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y http-server . -p 3000"
+  },
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  },
+  "keywords": [],
+  "author": "CBTA 197 Students",
+  "license": "ISC"
+}
