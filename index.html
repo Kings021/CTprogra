@@ -251,47 +251,51 @@
           <h2 class="hero-title">STREETWEAR EDITORIAL</h2>
           <p class="hero-desc">Descubre prendas oversized, siluetas urbanas y diseños minimalistas para esta temporada.</p>
           <button class="btn btn-primary btn-pull-bear" onclick="App.navigateTo('catalog')">
-            VER COLECCIÓN
+            VER TODO EL CATÁLOGO
           </button>
         </div>
       </div>
 
-      <!-- Grid Columnas Divididas (Lookbook Categorías) -->
-      <div class="home-split-grid stagger-item">
-        <!-- Columna Camisetas -->
-        <div class="split-col">
-          <div class="col-overlay"></div>
-          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=700&auto=format&fit=crop&q=80" alt="Camisetas" class="col-bg-img">
-          <div class="col-content">
-            <h3 class="col-title">CAMISETAS</h3>
-            <button class="btn btn-outline btn-white" onclick="Catalog.filterByCategoryAndNavigate('Camisetas')">COMPRAR</button>
-          </div>
-        </div>
-
-        <!-- Columna Sudaderas -->
-        <div class="split-col">
-          <div class="col-overlay"></div>
-          <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&auto=format&fit=crop&q=80" alt="Sudaderas" class="col-bg-img">
-          <div class="col-content">
-            <h3 class="col-title">SUDADERAS</h3>
-            <button class="btn btn-outline btn-white" onclick="Catalog.filterByCategoryAndNavigate('Sudaderas')">COMPRAR</button>
-          </div>
-        </div>
+      <div class="home-section-title stagger-item">
+        <h2>COMPRAR POR CATEGORÍA</h2>
       </div>
 
-      <!-- Grid Secundario (Accesorios y Shorts) -->
+      <!-- Grid de Categorías Completo (Estilo Editorial Pull&Bear) -->
       <div class="home-categories-grid stagger-item">
+        <!-- 1. Camisetas -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Camisetas')">
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=700&auto=format&fit=crop&q=80" alt="Camisetas" class="cat-card-img">
+          <div class="cat-card-title">CAMISETAS</div>
+        </div>
+        
+        <!-- 2. Sudaderas -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Sudaderas')">
+          <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&auto=format&fit=crop&q=80" alt="Sudaderas" class="cat-card-img">
+          <div class="cat-card-title">SUDADERAS</div>
+        </div>
+
+        <!-- 3. Pants -->
         <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Pants')">
           <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=80" alt="Pants" class="cat-card-img">
           <div class="cat-card-title">PANTS</div>
         </div>
+
+        <!-- 4. Chamarras -->
         <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Chamarras')">
           <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80" alt="Chamarras" class="cat-card-img">
           <div class="cat-card-title">CHAMARRAS</div>
         </div>
+
+        <!-- 5. Gorras -->
         <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Gorras')">
           <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80" alt="Gorras" class="cat-card-img">
           <div class="cat-card-title">GORRAS</div>
+        </div>
+
+        <!-- 6. Shorts -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Shorts')">
+          <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=80" alt="Shorts" class="cat-card-img">
+          <div class="cat-card-title">SHORTS</div>
         </div>
       </div>
     </section>
