@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C&Tees - Premium Streetwear Store</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="C&Tees - Colección premium de ropa streetwear del CBTA 197. Diseños vanguardistas, catálogo dinámico e historial interactivo.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+</head>
+<body class="loading-state">
+
+  <!-- PARTÍCULAS DE FONDO Y EFECTOS AURORA -->
+  <canvas id="particles-canvas"></canvas>
+  <div class="aurora-container">
+    <div class="aurora-glow glow-1"></div>
+    <div class="aurora-glow glow-2"></div>
+    <div class="aurora-glow glow-3"></div>
+  </div>
+
+  <!-- CURSOR PERSONALIZADO -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+  <div class="custom-cursor-follower" id="custom-cursor-follower"></div>
+
+  <!-- SPLASH SCREEN DE ENTRADA -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <!-- Ondas expansivas centrales -->
+      <div class="ripple-wave wave-1"></div>
+      <div class="ripple-wave wave-2"></div>
+      <div class="ripple-wave wave-3"></div>
+      
+      <!-- Logo animado -->
+      <div class="splash-logo-container">
+        <h1 class="splash-logo" id="splash-logo-text">C&TEES</h1>
+        <p class="splash-subtitle">Premium Luxury Streetwear</p>
+      </div>
+
+      <!-- Barra de carga real -->
+      <div class="loader-container">
+        <div class="loader-bar" id="loader-bar"></div>
+        <span class="loader-percent" id="loader-percent">0%</span>
+      </div>
+
+      <!-- Créditos / Integrantes del equipo -->
+      <div class="splash-credits">
+        <h3>EQUIPO DE DESARROLLO</h3>
+        <ul>
+          <li>Alessandro Vázquez Rentería</li>
+          <li>Sergio Cuevas Martínez</li>
+          <li>Reyes Francisco Espinoza Lara</li>
+          <li>Jesús Israel García Salazar</li>
+        </ul>
+        <p class="group-info">Grupo: <strong>6B TP</strong> | Materia: <strong>Implementa Aplicaciones Web</strong> | <strong>CBTA 197</strong></p>
+      </div>
+    </div>
+    <!-- Cortinas diagonales de salida -->
+    <div class="curtain-half curtain-top"></div>
+    <div class="curtain-half curtain-bottom"></div>
+  </div>
+
+  <!-- HEADER / NAVBAR (GLASSMORPHISM) -->
+  <header class="app-header hidden" id="app-header">
+    <div class="header-container">
+      <button class="nav-toggle-btn" id="sidebar-toggle" aria-label="Abrir menú">
+        <i data-lucide="menu"></i>
+      </button>
+
+      <a href="#" class="brand-logo" id="brand-logo-home">
+        C&TEES
+      </a>
+
+      <!-- Breadcrumbs animado -->
+      <div class="breadcrumbs-container" id="breadcrumbs">
+        <span class="breadcrumb-item">Inicio</span>
+      </div>
+
+      <!-- Iconos de acción navbar -->
+      <div class="header-actions">
+        <button class="action-btn user-profile-btn" id="user-profile-nav" title="Perfil / Cerrar Sesión">
+          <i data-lucide="user"></i>
+          <span class="user-name-display" id="user-name-display">Admin</span>
+        </button>
+        
+        <button class="action-btn cart-toggle-btn" id="cart-toggle-nav" aria-label="Ver carrito">
+          <div class="cart-icon-wrapper">
+            <i data-lucide="shopping-bag"></i>
+            <span class="cart-badge-count" id="cart-badge-count">0</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR DE NAVEGACIÓN -->
+  <aside class="app-sidebar" id="app-sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">MENÚ</h2>
+      <button class="close-sidebar-btn" id="sidebar-close-btn">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <ul>
+        <li>
+          <a href="#" class="nav-link active" data-target="home">
+            <i data-lucide="home"></i>
+            <span>Inicio</span>
+          </a>
+        </li>
+        <li>
+          <a href="landing.html" class="nav-link">
+            <i data-lucide="sparkles"></i>
+            <span>Landing Page</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" data-target="catalog">
+            <i data-lucide="grid"></i>
+            <span>Catálogo</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" data-target="scanner">
+            <i data-lucide="scan-line"></i>
+            <span>Escanear Código</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" data-target="history">
+            <i data-lucide="clock"></i>
+            <span>Historial Ventas</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link" data-target="admin">
+            <i data-lucide="plus-circle"></i>
+            <span>Registrar Producto</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p class="school-footer">CBTA 197 | 6B TP</p>
+      <button class="btn btn-outline btn-logout" id="sidebar-logout-btn">
+        <i data-lucide="log-out"></i>
+        <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- OVERLAY GENERAL PARA SIDEBAR Y CARRITO -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- PANTALLAS DE LA SPA -->
+  <main class="spa-container hidden" id="spa-container">
+
+    <!-- 1. PANTALLA: LOGIN & REGISTRO -->
+    <section id="screen-auth" class="spa-screen active">
+      <div class="auth-wrapper">
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <button class="auth-tab-btn active" id="tab-login" data-tab="login-form">LOGIN</button>
+            <button class="auth-tab-btn" id="tab-register" data-tab="register-form">REGISTRO</button>
+            <span class="auth-tab-slider"></span>
+          </div>
+
+          <div class="auth-content-slider">
+            <!-- Formulario Login -->
+            <form id="login-form" class="auth-form active">
+              <h2 class="form-title">Bienvenido de nuevo</h2>
+              <p class="form-subtitle">Ingresa a tu cuenta de C&Tees</p>
+              
+              <div class="form-group">
+                <input type="text" id="login-username" required placeholder=" " autocomplete="username">
+                <label for="login-username">Usuario</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <div class="form-group">
+                <input type="password" id="login-password" required placeholder=" " autocomplete="current-password">
+                <label for="login-password">Contraseña</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-auth-submit" id="btn-login-submit">
+                <span class="btn-text">INICIAR SESIÓN</span>
+                <span class="btn-spinner"></span>
+                <span class="btn-success-check"><i data-lucide="check"></i></span>
+              </button>
+
+              <div class="auth-footer-tip">
+                <p>Usuario demo: <strong>admin</strong> | Clave: <strong>12345</strong></p>
+              </div>
+            </form>
+
+            <!-- Formulario Registro -->
+            <form id="register-form" class="auth-form">
+              <h2 class="form-title">Crea tu cuenta</h2>
+              <p class="form-subtitle">Únete a la experiencia luxury streetwear</p>
+
+              <div class="form-group">
+                <input type="text" id="reg-name" required placeholder=" ">
+                <label for="reg-name">Nombre Completo</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <div class="form-group">
+                <input type="text" id="reg-username" required placeholder=" ">
+                <label for="reg-username">Usuario nuevo</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <div class="form-group">
+                <input type="password" id="reg-password" required placeholder=" ">
+                <label for="reg-password">Contraseña</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <div class="form-group">
+                <input type="password" id="reg-password-confirm" required placeholder=" ">
+                <label for="reg-password-confirm">Confirmar Contraseña</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-auth-submit" id="btn-register-submit">
+                <span class="btn-text">CREAR CUENTA</span>
+                <span class="btn-spinner"></span>
+                <span class="btn-success-check"><i data-lucide="check"></i></span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANTALLA: INICIO (PULL&BEAR LOOKBOOK STYLE) -->
+    <section id="screen-home" class="spa-screen">
+      <!-- Banner Hero Principal -->
+      <div class="home-hero-banner stagger-item">
+        <div class="hero-overlay"></div>
+        <img src="https://images.unsplash.com/photo-1509281373149-e957c6296406?w=1400&auto=format&fit=crop&q=80" alt="Colección de Ropa" class="hero-bg-img" id="home-hero-img">
+        <div class="hero-content">
+          <span class="hero-tag">NEW SEASON</span>
+          <h2 class="hero-title">STREETWEAR EDITORIAL</h2>
+          <p class="hero-desc">Descubre prendas oversized, siluetas urbanas y diseños minimalistas para esta temporada.</p>
+          <button class="btn btn-primary btn-pull-bear" onclick="App.navigateTo('catalog')">
+            VER TODO EL CATÁLOGO
+          </button>
+        </div>
+      </div>
+
+      <div class="home-section-title stagger-item">
+        <h2>COMPRAR POR CATEGORÍA</h2>
+      </div>
+
+      <!-- Grid de Categorías Completo (Estilo Editorial Pull&Bear) -->
+      <div class="home-categories-grid stagger-item">
+        <!-- 1. Camisetas -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Camisetas')">
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=700&auto=format&fit=crop&q=80" alt="Camisetas" class="cat-card-img" id="home-img-camisetas">
+          <div class="cat-card-title">CAMISETAS</div>
+        </div>
+        
+        <!-- 2. Sudaderas -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Sudaderas')">
+          <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=700&auto=format&fit=crop&q=80" alt="Sudaderas" class="cat-card-img" id="home-img-sudaderas">
+          <div class="cat-card-title">SUDADERAS</div>
+        </div>
+
+        <!-- 3. Pants -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Pants')">
+          <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=80" alt="Pants" class="cat-card-img" id="home-img-pants">
+          <div class="cat-card-title">PANTS</div>
+        </div>
+
+        <!-- 4. Chamarras -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Chamarras')">
+          <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80" alt="Chamarras" class="cat-card-img" id="home-img-chamarras">
+          <div class="cat-card-title">CHAMARRAS</div>
+        </div>
+
+        <!-- 5. Gorras -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Gorras')">
+          <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80" alt="Gorras" class="cat-card-img" id="home-img-gorras">
+          <div class="cat-card-title">GORRAS</div>
+        </div>
+
+        <!-- 6. Shorts -->
+        <div class="cat-grid-card" onclick="Catalog.filterByCategoryAndNavigate('Shorts')">
+          <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&auto=format&fit=crop&q=80" alt="Shorts" class="cat-card-img" id="home-img-shorts">
+          <div class="cat-card-title">SHORTS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PANTALLA: CATÁLOGO DE PRODUCTOS -->
+    <section id="screen-catalog" class="spa-screen">
+      <div class="screen-header">
+        <h1 class="screen-title">CATÁLOGO</h1>
+        <p class="screen-subtitle">Explora nuestras últimas colecciones de temporada</p>
+      </div>
+
+      <!-- Barra de Filtros, Búsqueda y Ordenamiento -->
+      <div class="filters-container">
+        <!-- Buscador en tiempo real -->
+        <div class="search-box">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" id="catalog-search-input" placeholder="Buscar prendas o códigos...">
+          <button class="clear-search-btn" id="clear-search-btn">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <!-- Categorías (Navegación / Filtros) -->
+        <div class="categories-filter" id="categories-filter-container">
+          <button class="category-btn active" data-category="Todos">Todos</button>
+          <button class="category-btn" data-category="Camisetas">Camisetas</button>
+          <button class="category-btn" data-category="Pants">Pants</button>
+          <button class="category-btn" data-category="Chamarras">Chamarras</button>
+          <button class="category-btn" data-category="Gorras">Gorras</button>
+          <button class="category-btn" data-category="Shorts">Shorts</button>
+          <button class="category-btn" data-category="Sudaderas">Sudaderas</button>
+        </div>
+
+        <!-- Selector de ordenamiento -->
+        <div class="sort-box">
+          <label for="catalog-sort-select">Ordenar por:</label>
+          <div class="select-wrapper">
+            <select id="catalog-sort-select">
+              <option value="none">Por Defecto</option>
+              <option value="price-asc">Precio: Bajo a Alto</option>
+              <option value="price-desc">Precio: Alto a Bajo</option>
+              <option value="name-asc">Nombre: A - Z</option>
+            </select>
+            <i data-lucide="chevron-down" class="select-arrow"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid de Productos (Skeleton loading por defecto) -->
+      <div class="products-grid" id="products-grid">
+        <!-- Skeletons se inyectan dinámicamente o se definen aquí -->
+        <div class="skeleton-card">
+          <div class="skeleton-image shimmer"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line title shimmer"></div>
+            <div class="skeleton-line text shimmer"></div>
+            <div class="skeleton-line price shimmer"></div>
+          </div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-image shimmer"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line title shimmer"></div>
+            <div class="skeleton-line text shimmer"></div>
+            <div class="skeleton-line price shimmer"></div>
+          </div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-image shimmer"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line title shimmer"></div>
+            <div class="skeleton-line text shimmer"></div>
+            <div class="skeleton-line price shimmer"></div>
+          </div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-image shimmer"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line title shimmer"></div>
+            <div class="skeleton-line text shimmer"></div>
+            <div class="skeleton-line price shimmer"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PANTALLA: ESCÁNER DE CÓDIGO DE BARRAS (SIMULADO) -->
+    <section id="screen-scanner" class="spa-screen">
+      <div class="screen-header">
+        <h1 class="screen-title">ESCÁNER</h1>
+        <p class="screen-subtitle">Simulación de escaneo rápido de etiquetas C&Tees</p>
+      </div>
+
+      <div class="scanner-layout">
+        <!-- Zona interactiva del visor del escáner -->
+        <div class="scanner-viewport-container">
+          <div class="scanner-viewport" id="scanner-viewport">
+            <div class="scanner-laser"></div>
+            <!-- Esquinas pulsantes -->
+            <div class="scanner-bracket bracket-tl"></div>
+            <div class="scanner-bracket bracket-tr"></div>
+            <div class="scanner-bracket bracket-bl"></div>
+            <div class="scanner-bracket bracket-br"></div>
+            
+            <!-- Superposición de flash de éxito -->
+            <div class="scanner-flash-overlay" id="scanner-flash"></div>
+            
+            <div class="scanner-placeholder-content">
+              <i data-lucide="scan" class="scanner-icon-main"></i>
+              <p>Esperando lectura de código...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel de control e instrucciones -->
+        <div class="scanner-controls-card">
+          <h2 class="controls-title">Instrucciones de Uso</h2>
+          <p class="controls-desc">Selecciona uno de los códigos de demostración listados a continuación para simular la aproximación y lectura del código de barras en el sensor de la caja.</p>
+          
+          <div class="barcode-buttons-grid" id="barcode-demo-grid">
+            <!-- Botones inyectados dinámicamente desde el JS -->
+          </div>
+
+          <!-- Resultado del Escaneo con Materialización -->
+          <div class="scanned-result-container hidden" id="scanned-result">
+            <div class="result-label">PRODUCTO IDENTIFICADO</div>
+            <div class="scanned-product-card">
+              <img src="" alt="" class="scanned-img" id="scanned-img">
+              <div class="scanned-details">
+                <h3 class="scanned-name" id="scanned-name">Nombre</h3>
+                <span class="scanned-category" id="scanned-category">Categoría</span>
+                <div class="scanned-price" id="scanned-price">$0.00</div>
+                <div class="scanned-barcode-value"><i data-lucide="barcode"></i> <span id="scanned-code-val"></span></div>
+              </div>
+            </div>
+            <div class="result-action-note">
+              <i data-lucide="check-circle-2"></i> Añadido automáticamente al carrito
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PANTALLA: REGISTRO DE PRODUCTOS (ADMIN) -->
+    <section id="screen-admin" class="spa-screen">
+      <div class="screen-header">
+        <h1 class="screen-title">ADMINISTRACIÓN</h1>
+        <p class="screen-subtitle">Gestión de stock, lanzamientos e imágenes de la tienda C&Tees</p>
+      </div>
+
+      <!-- Tabs de Administración -->
+      <div class="admin-tabs stagger-item">
+        <button class="admin-tab-btn active" id="admin-tab-prod" onclick="Admin.switchTab('prod')">NUEVA PRENDA</button>
+        <button class="admin-tab-btn" id="admin-tab-images" onclick="Admin.switchTab('images')">GESTIONAR IMÁGENES</button>
+      </div>
+
+      <!-- Panel 1: Registro de Productos -->
+      <div class="admin-tab-content active stagger-item" id="admin-panel-prod">
+        <div class="admin-layout">
+          <!-- Formulario de carga de productos -->
+          <form class="admin-form-card" id="admin-product-form">
+            <h2 class="card-inner-title">Nueva Prenda</h2>
+            
+            <div class="form-group">
+              <input type="text" id="admin-prod-name" required placeholder=" ">
+              <label for="admin-prod-name">Nombre del Producto</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <select id="admin-prod-category" required>
+                <option value="" disabled selected hidden></option>
+                <option value="Camisetas">Camisetas</option>
+                <option value="Pants">Pants</option>
+                <option value="Chamarras">Chamarras</option>
+                <option value="Gorras">Gorras</option>
+                <option value="Shorts">Shorts</option>
+                <option value="Sudaderas">Sudaderas</option>
+              </select>
+              <label for="admin-prod-category">Categoría</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="number" id="admin-prod-price" required min="1" placeholder=" ">
+              <label for="admin-prod-price">Precio ($ MXN)</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="text" id="admin-prod-barcode" required placeholder=" ">
+              <label for="admin-prod-barcode">Código de Barras Único</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="url" id="admin-prod-image" required placeholder=" ">
+              <label for="admin-prod-image">URL de la Imagen (Unsplash, Picsum, etc.)</label>
+              <span class="line-bottom"></span>
+              <div class="image-suggestions">
+                <span>Sugerencias rápidas:</span>
+                <button type="button" class="btn-suggestion-url" data-url="https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?w=500&auto=format&fit=crop">Chamarra</button>
+                <button type="button" class="btn-suggestion-url" data-url="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop">T-Shirt</button>
+                <button type="button" class="btn-suggestion-url" data-url="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=500&auto=format&fit=crop">Pants</button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full-width" id="btn-admin-submit">
+              <i data-lucide="plus"></i> Registrar Prenda
+            </button>
+          </form>
+
+          <!-- Preview en tiempo real -->
+          <div class="admin-preview-pane">
+            <h2 class="card-inner-title">Vista Previa de la Card</h2>
+            <div class="preview-card-placeholder" id="admin-card-preview-container">
+              <!-- Card renderizada en tiempo real mediante JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Gestión de Imágenes (Lookbook y Productos) -->
+      <div class="admin-tab-content stagger-item" id="admin-panel-images" style="display: none;">
+        <div class="admin-layout">
+          <!-- Formulario de imágenes de inicio (Lookbook) -->
+          <form class="admin-form-card" id="admin-lookbook-form">
+            <h2 class="card-inner-title">Imágenes de Inicio (Lookbook)</h2>
+            
+            <div class="form-group">
+              <input type="url" id="edit-img-hero" required placeholder=" ">
+              <label for="edit-img-hero">URL del Banner Principal (Hero)</label>
+              <span class="line-bottom"></span>
+            </div>
+            
+            <div class="form-group">
+              <input type="url" id="edit-img-camisetas" required placeholder=" ">
+              <label for="edit-img-camisetas">URL Camisetas</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="url" id="edit-img-sudaderas" required placeholder=" ">
+              <label for="edit-img-sudaderas">URL Sudaderas</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="url" id="edit-img-pants" required placeholder=" ">
+              <label for="edit-img-pants">URL Pants</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="url" id="edit-img-chamarras" required placeholder=" ">
+              <label for="edit-img-chamarras">URL Chamarras</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="url" id="edit-img-gorras" required placeholder=" ">
+              <label for="edit-img-gorras">URL Gorras</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <div class="form-group">
+              <input type="url" id="edit-img-shorts" required placeholder=" ">
+              <label for="edit-img-shorts">URL Shorts</label>
+              <span class="line-bottom"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full-width" id="btn-lookbook-submit">
+              <i data-lucide="save"></i> Guardar Portadas Lookbook
+            </button>
+          </form>
+
+          <!-- Formulario de imágenes de productos existentes -->
+          <div class="admin-form-card">
+            <h2 class="card-inner-title">Imágenes de Prendas Existentes</h2>
+            <form id="admin-prod-images-form">
+              <div class="form-group">
+                <select id="edit-prod-select" required onchange="Admin.loadSelectedProductImage()">
+                  <!-- Opciones inyectadas dinámicamente -->
+                </select>
+                <label for="edit-prod-select">Selecciona una Prenda</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <!-- Vista previa actual del producto -->
+              <div class="selected-product-preview-container" style="text-align: center; margin-bottom: 25px; min-height: 200px; display: flex; align-items: center; justify-content: center; background: var(--color-secundario); border: var(--border-glow);">
+                <span id="selected-prod-img-placeholder" style="color: var(--color-texto-muted); font-size: 0.85rem;">Ninguna prenda seleccionada</span>
+                <img id="selected-prod-img-preview" src="" alt="Vista Previa" style="max-width: 100%; max-height: 200px; object-fit: cover; display: none;">
+              </div>
+
+              <div class="form-group">
+                <input type="url" id="edit-prod-image-url" required placeholder=" ">
+                <label for="edit-prod-image-url">Nueva URL de la Imagen</label>
+                <span class="line-bottom"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full-width" id="btn-prod-image-submit">
+                <i data-lucide="save"></i> Actualizar Imagen de Prenda
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PANTALLA: HISTORIAL DE VENTAS -->
+    <section id="screen-history" class="spa-screen">
+      <div class="screen-header">
+        <h1 class="screen-title">HISTORIAL DE VENTAS</h1>
+        <p class="screen-subtitle">Registro y analíticas financieras en tiempo real</p>
+      </div>
+
+      <!-- Sección de Estadísticas -->
+      <div class="statistics-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper acento">
+            <i data-lucide="dollar-sign"></i>
+          </div>
+          <div class="stat-details">
+            <span class="stat-value" id="stat-total-revenue">$0</span>
+            <span class="stat-label">Ingresos Totales</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper acento2">
+            <i data-lucide="trending-up"></i>
+          </div>
+          <div class="stat-details">
+            <span class="stat-value" id="stat-highest-sale">$0</span>
+            <span class="stat-label">Venta Más Alta</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper primary">
+            <i data-lucide="shopping-cart"></i>
+          </div>
+          <div class="stat-details">
+            <span class="stat-value" id="stat-total-items">0</span>
+            <span class="stat-label">Prendas Vendidas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico y Controles del Historial -->
+      <div class="history-analytics-layout">
+        <!-- Gráfica de Barras de Ventas por Categoría -->
+        <div class="analytics-card">
+          <h2 class="card-inner-title">Ventas por Categoría</h2>
+          <div class="chart-container" id="category-chart">
+            <!-- Las barras se crean y animan en js/historial.js -->
+          </div>
+        </div>
+
+        <!-- Lista Timeline de Ventas -->
+        <div class="timeline-container-card">
+          <div class="timeline-card-header">
+            <h2 class="card-inner-title">Historial de Transacciones</h2>
+            <div class="history-controls">
+              <button class="btn btn-outline btn-sm" id="btn-export-history">
+                <i data-lucide="download"></i> Exportar
+              </button>
+              <button class="btn btn-outline btn-sm btn-clear" id="btn-clear-history">
+                <i data-lucide="trash-2"></i> Limpiar
+              </button>
+            </div>
+          </div>
+
+          <div class="timeline-wrapper" id="history-timeline">
+            <!-- Timeline vertical se dibuja aquí -->
+            <div class="no-history-state" id="no-history-state">
+              <i data-lucide="receipt"></i>
+              <p>No se registran ventas realizadas todavía.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CARRITO DE COMPRAS DRAWER (SLIDES FROM RIGHT) -->
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <div class="cart-title-wrapper">
+        <i data-lucide="shopping-bag"></i>
+        <h2>TU CARRITO</h2>
+      </div>
+      <button class="close-cart-btn" id="cart-close-btn" aria-label="Cerrar carrito">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+
+    <div class="cart-drawer-body" id="cart-items-container">
+      <!-- Los elementos agregados se inyectan aquí -->
+      <div class="empty-cart-state" id="empty-cart-state">
+        <i data-lucide="shopping-cart" class="empty-cart-icon"></i>
+        <p class="empty-cart-text">El carrito está vacío</p>
+        <button class="btn btn-primary btn-sm btn-catalog-back" id="btn-cart-empty-back">Volver al Catálogo</button>
+      </div>
+    </div>
+
+    <div class="cart-drawer-footer" id="cart-footer-details">
+      <!-- Descuentos y códigos promocionales -->
+      <div class="promo-code-container">
+        <div class="promo-input-group">
+          <input type="text" id="cart-promo-code" placeholder="Código de descuento (VIP20, CT10)">
+          <button class="btn btn-secondary btn-sm" id="btn-apply-promo">Aplicar</button>
+        </div>
+        <div class="promo-feedback-msg" id="promo-msg"></div>
+      </div>
+
+      <div class="cart-totals-summary">
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span id="cart-summary-subtotal">$0.00</span>
+        </div>
+        <div class="total-row discount-row hidden" id="discount-summary-row">
+          <span>Descuento (<span id="discount-percent-label">0</span>%)</span>
+          <span id="cart-summary-discount">-$0.00</span>
+        </div>
+        <div class="total-row main-total">
+          <span>Total</span>
+          <!-- Efecto de slot machine en el total -->
+          <div class="odometer-container">
+            <span class="odometer-prefix">$</span>
+            <span class="odometer-value" id="cart-summary-total">0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-checkout-pay btn-full-width" id="btn-checkout-pay">
+        <span class="btn-text">FINALIZAR COMPRA</span>
+        <span class="btn-spinner"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTAINER DE NOTIFICACIONES TOAST (GLOBAL) -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- MODAL DE EXPORTACIÓN / DETALLE -->
+  <div class="modal-backdrop hidden" id="general-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Título del Modal</h3>
+        <button class="close-modal-btn" id="close-modal-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Contenido dinámico -->
+      </div>
+      <div class="modal-footer" id="modal-footer">
+        <button class="btn btn-outline" id="btn-modal-close">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- JS Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/historial.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

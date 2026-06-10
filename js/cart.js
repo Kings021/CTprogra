@@ -436,28 +436,33 @@ const Cart = {
 
       await DB.registrarVenta(venta);
 
-      // Simular ticket de venta para mostrar en el modal
+      // ---- Construir contenido del ticket (reutilizable para modal e impresión) ----
+      const ticketItems = this.items.map(item =>
+        `<li style="display:flex; justify-content:space-between; margin-bottom:4px;">
+          <span>${item.producto.nombre.substring(0,22)}${item.talla ? ` (${item.talla})` : ''} x${item.cantidad}</span>
+          <span>$${((item.producto.price || item.producto.precio) * item.cantidad).toFixed(2)}</span>
+        </li>`
+      ).join("");
+
+      const cuponLine = venta.cupon !== "Ninguno"
+        ? `<p style="font-size:0.75rem; color:#2ecc71; text-align:center; margin-top:10px;">Cupón aplicado: ${venta.cupon}</p>`
+        : "";
+
       const ticketHTML = `
-        <div style="font-family: monospace; font-size: 0.85rem; color:#fff; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 6px; border: 1px dashed rgba(255,255,255,0.15);">
-          <div style="text-align: center; font-weight: bold; margin-bottom: 15px;">C&TEES - TICKET DE VENTA<br>CBTA 197</div>
+        <div id="ticket-printable" style="font-family: monospace; font-size: 0.85rem; color:#fff; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 6px; border: 1px dashed rgba(255,255,255,0.15);">
+          <div style="text-align: center; font-weight: bold; margin-bottom: 15px;">C&amp;TEES - TICKET DE VENTA<br>CBTA 197</div>
           <p><strong>FOLIO:</strong> ${venta.id}</p>
           <p><strong>FECHA:</strong> ${venta.fecha} ${venta.hora}</p>
           <p><strong>ATENDIDO POR:</strong> ${venta.vendedor}</p>
           <hr style="border: none; border-top: 1px dashed rgba(255,255,255,0.1); margin: 10px 0;">
-          <ul style="list-style: none; padding-left: 0;">
-            ${this.items.map(item => `
-              <li style="display:flex; justify-content:space-between;">
-                <span>${item.producto.nombre.substring(0,20)} (x${item.cantidad})</span>
-                <span>$${((item.producto.price || item.producto.precio) * item.cantidad).toFixed(2)}</span>
-              </li>
-            `).join("")}
-          </ul>
+          <ul style="list-style: none; padding-left: 0;">${ticketItems}</ul>
           <hr style="border: none; border-top: 1px dashed rgba(255,255,255,0.1); margin: 10px 0;">
           <div style="display:flex; justify-content:space-between; font-weight: bold; color: var(--color-acento2);">
             <span>TOTAL PAGADO:</span>
             <span>$${venta.total.toFixed(2)}</span>
           </div>
-          ${venta.cupon !== "Ninguno" ? `<p style="font-size: 0.75rem; color:#2ecc71; text-align:center; margin-top:10px;">Cupón aplicado: ${venta.cupon}</p>` : ""}
+          ${cuponLine}
+          <p style="text-align:center; margin-top:14px; font-size:0.7rem; opacity:0.5;">Gracias por tu compra ♥</p>
         </div>
       `;
 
@@ -479,9 +484,81 @@ const Cart = {
       if (promoInput) promoInput.value = "";
       if (promoMsg) promoMsg.style.display = "none";
 
-      // Mostrar Ticket
-      UI.showModal("COMPRA PROCESADA EXITOSAMENTE", ticketHTML);
       UI.showToast("Venta completada con éxito", "success");
+
+      // ---- Función global para imprimir / descargar el ticket ----
+      window._ticketPrintData = { venta, items: ticketItems, cuponLine };
+      window.printTicket = function(download) {
+        const { venta, items, cuponLine } = window._ticketPrintData;
+        const win = window.open('', '_blank', 'width=420,height=650');
+        win.document.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ticket C&amp;TEES - ${venta.id}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      background: #fff;
+      color: #111;
+      padding: 20px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .logo { text-align: center; font-size: 18px; font-weight: 900; letter-spacing: 3px; margin-bottom: 4px; }
+    .sub  { text-align: center; font-size: 10px; letter-spacing: 2px; color: #555; margin-bottom: 16px; }
+    .divider { border: none; border-top: 1px dashed #999; margin: 10px 0; }
+    .label { font-size: 10px; color: #555; }
+    .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .total-row { display: flex; justify-content: space-between; font-weight: 900; font-size: 15px; margin-top: 6px; }
+    .cupon { text-align: center; font-size: 10px; color: #2e7d32; margin-top: 8px; }
+    .footer { text-align: center; font-size: 10px; color: #999; margin-top: 16px; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    @media print {
+      body { padding: 10px; }
+      button { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">C&amp;TEES</div>
+  <div class="sub">CBTA 197 &mdash; TICKET DE VENTA</div>
+  <hr class="divider">
+  <p class="label">FOLIO</p><p><strong>${venta.id}</strong></p>
+  <p class="label" style="margin-top:6px">FECHA</p><p>${venta.fecha} &nbsp; ${venta.hora}</p>
+  <p class="label" style="margin-top:6px">ATENDIDO POR</p><p>${venta.vendedor}</p>
+  <hr class="divider">
+  <ul>${items}</ul>
+  <hr class="divider">
+  <div class="total-row"><span>TOTAL PAGADO</span><span>$${venta.total.toFixed(2)} MXN</span></div>
+  ${cuponLine ? `<div class="cupon">${venta.cupon ? 'Cupón: ' + venta.cupon : ''}</div>` : ''}
+  <div class="footer">&mdash; ¡Gracias por tu compra! &mdash;<br>C&amp;TEES Streetwear</div>
+  <script>
+    ${download ? 'window.onload = () => { window.print(); };' : 'window.onload = () => { window.print(); };'}
+  <\/script>
+</body>
+</html>`);
+        win.document.close();
+      };
+
+      const ticketFooterHTML = `
+        <button class="btn btn-outline" onclick="UI.closeModal()" style="gap:6px;">
+          <i data-lucide="x" style="width:14px;height:14px;"></i> Cerrar
+        </button>
+        <button class="btn btn-outline" onclick="printTicket(false)" style="gap:6px;">
+          <i data-lucide="printer" style="width:14px;height:14px;"></i> Imprimir
+        </button>
+        <button class="btn btn-primary" onclick="printTicket(true)" style="gap:6px;">
+          <i data-lucide="download" style="width:14px;height:14px;"></i> Descargar PDF
+        </button>
+      `;
+
+      // Mostrar Ticket
+      UI.showModal("COMPRA PROCESADA EXITOSAMENTE", ticketHTML, ticketFooterHTML);
+      if (window.lucide) window.lucide.createIcons();
 
       // Si estamos en la sección de historial, actualizarla de inmediato
       if (typeof HistoryScreen !== 'undefined' && App.activeScreenId === "history") {
