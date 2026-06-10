@@ -1,24 +1,24 @@
 /* main.css - Variables, Reset, Canvas y Layout Base */
 
 :root {
-  /* Paleta de Colores Solicitada */
-  --color-primario: #1a1a2e;        /* Azul oscuro profundo */
-  --color-secundario: #16213e;      /* Azul navy */
-  --color-acento: #e94560;          /* Rojo/coral vibrante */
-  --color-acento2: #f5a623;         /* Naranja dorado */
-  --color-texto: #eaeaea;           /* Blanco suave */
-  --color-texto-muted: #8e8e9f;     /* Gris apagado */
-  --color-superficie: rgba(255, 255, 255, 0.05); /* Glassmorphism base */
-  --color-superficie-hover: rgba(255, 255, 255, 0.1);
-  --color-superficie-solid: #1e1e38;
-  --gradiente-principal: linear-gradient(135deg, #e94560, #f5a623);
-  --gradiente-aurora-1: #e94560;
-  --gradiente-aurora-2: #0f3460;
-  --gradiente-aurora-3: #f5a623;
-  --sombra-neon: 0 0 20px rgba(233, 69, 96, 0.4);
-  --sombra-neon-acento2: 0 0 20px rgba(245, 166, 35, 0.4);
-  --border-glow: 1px solid rgba(255, 255, 255, 0.1);
-  --border-neon: 1px solid rgba(233, 69, 96, 0.3);
+  /* Paleta de Colores Pull&Bear Grayscale */
+  --color-primario: #ffffff;        /* Blanco puro */
+  --color-secundario: #f5f5f5;      /* Gris claro */
+  --color-acento: #000000;          /* Negro */
+  --color-acento2: #333333;         /* Gris oscuro */
+  --color-texto: #111111;           /* Texto oscuro */
+  --color-texto-muted: #767676;     /* Texto gris apagado */
+  --color-superficie: rgba(0, 0, 0, 0.03); /* Superficie sutil */
+  --color-superficie-hover: rgba(0, 0, 0, 0.06);
+  --color-superficie-solid: #fafafa;
+  --gradiente-principal: linear-gradient(135deg, #000000, #333333);
+  --gradiente-aurora-1: #000000;
+  --gradiente-aurora-2: #222222;
+  --gradiente-aurora-3: #555555;
+  --sombra-neon: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --sombra-neon-acento2: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --border-glow: 1px solid #e5e5e5;
+  --border-neon: 1px solid #cccccc;
 
   /* Fuentes */
   --font-title: 'Poppins', sans-serif;
@@ -26,8 +26,8 @@
 
   /* Transiciones estándar */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Reset de Estilos */
@@ -82,72 +82,20 @@ body.loading-state {
 
 /* Canvas de Partículas */
 #particles-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
+  display: none !important;
 }
 
 /* Fondos Aurora Boreal Animados Detrás de la UI */
 .aurora-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-  opacity: 0.65;
-  filter: blur(140px);
+  display: none !important;
 }
 
 .aurora-glow {
-  position: absolute;
-  border-radius: 50%;
-  will-change: transform;
-}
-
-.glow-1 {
-  top: -10%;
-  left: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, rgba(233,69,96,0.3) 0%, rgba(26,26,46,0) 70%);
-  animation: aurora-glow-animation 20s infinite alternate ease-in-out;
-}
-
-.glow-2 {
-  bottom: -20%;
-  right: -10%;
-  width: 70vw;
-  height: 70vw;
-  background: radial-gradient(circle, rgba(15,52,96,0.4) 0%, rgba(26,26,46,0) 70%);
-  animation: aurora-glow-animation 25s infinite alternate-reverse ease-in-out;
-}
-
-.glow-3 {
-  top: 40%;
-  left: 30%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, rgba(245,166,35,0.2) 0%, rgba(26,26,46,0) 70%);
-  animation: aurora-glow-animation 18s infinite alternate ease-in-out 2s;
+  display: none !important;
 }
 
 @keyframes aurora-glow-animation {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  50% {
-    transform: translate(5%, 10%) scale(1.1) rotate(180deg);
-  }
-  100% {
-    transform: translate(-5%, -5%) scale(0.9) rotate(360deg);
-  }
+  0% { opacity: 0; }
 }
 
 /* Cursors Personalizados */
@@ -208,16 +156,14 @@ body.cursor-hover .custom-cursor-follower {
   display: flex;
   align-items: center;
   border-bottom: var(--border-glow);
-  background: rgba(26, 26, 46, 0.7);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: #ffffff;
   transition: var(--transition-normal);
 }
 
 .app-header.scrolled {
-  height: 65px;
-  background: rgba(22, 33, 62, 0.9);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  height: 70px;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .header-container {
@@ -273,13 +219,11 @@ body.cursor-hover .custom-cursor-follower {
 
 .screen-title {
   font-family: var(--font-title);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   text-transform: uppercase;
-  background: var(--gradiente-principal);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #000000;
   display: inline-block;
   margin-bottom: 8px;
 }
@@ -302,7 +246,7 @@ body.cursor-hover .custom-cursor-follower {
   letter-spacing: 0.5px;
   font-size: 0.85rem;
   padding: 14px 28px;
-  border-radius: 4px;
+  border-radius: 0px !important; /* Bordes rectos estilo bloque */
   border: none;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: inline-flex;
@@ -315,42 +259,46 @@ body.cursor-hover .custom-cursor-follower {
 }
 
 .btn-primary {
-  background: var(--gradiente-principal);
+  background: #000000;
   color: #fff;
-  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+  border: 1px solid #000000;
+  box-shadow: none;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--sombra-neon);
+  background: #333333;
+  border-color: #333333;
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .btn-primary:active {
-  transform: translateY(1px);
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  background: var(--color-secundario);
-  color: var(--color-texto);
-  border: var(--border-glow);
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
 }
 
 .btn-secondary:hover {
-  background: var(--color-superficie-hover);
-  transform: translateY(-2px);
+  background: #f5f5f5;
+  transform: translateY(0);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--color-texto);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #000000;
+  border: 1px solid #000000;
 }
 
 .btn-outline:hover {
-  background: var(--color-superficie);
-  border-color: var(--color-acento);
-  box-shadow: 0 0 10px rgba(233, 69, 96, 0.2);
-  transform: translateY(-2px);
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: none;
+  transform: translateY(0);
 }
 
 .btn-sm {

@@ -91,7 +91,7 @@ const Auth = {
           // Guardar sesión e iniciar app
           DB.setSesionActiva(usuarioEncontrado);
           App.showAppLayout(usuarioEncontrado.nombre);
-          App.navigateTo("catalog");
+          App.navigateTo("home");
           
           // Resetear estados del formulario
           loginForm.reset();

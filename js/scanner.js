@@ -62,7 +62,7 @@ const Scanner = {
     // Efecto de carga simulada de enfoque
     UI.showToast("Leyendo código de barras...", "info", 1000);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       // 1. Sonido beep
       UI.playBeep();
 
@@ -89,7 +89,7 @@ const Scanner = {
       }
 
       // 4. Buscar producto
-      const productos = DB.getProductos();
+      const productos = await DB.getProductos();
       const producto = productos.find(p => p.codigoBarras === barcode);
 
       if (producto) {

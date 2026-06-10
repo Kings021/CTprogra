@@ -55,7 +55,7 @@ const App = {
       const usuarioLogueado = DB.getSesionActiva();
       if (usuarioLogueado) {
         this.showAppLayout(usuarioLogueado.nombre);
-        this.navigateTo("catalog", false);
+        this.navigateTo("home", false);
       } else {
         this.hideAppLayout();
         this.navigateTo("auth", false);
@@ -115,7 +115,7 @@ const App = {
       logoHome.addEventListener("click", (e) => {
         e.preventDefault();
         if (DB.getSesionActiva()) {
-          this.navigateTo("catalog");
+          this.navigateTo("home");
         }
       });
     }
@@ -261,6 +261,7 @@ const App = {
     if (!container) return;
 
     let text = "Inicio";
+    if (screenId === "home") text = "Inicio";
     if (screenId === "catalog") text = "Inicio > Catálogo";
     if (screenId === "scanner") text = "Inicio > Escáner";
     if (screenId === "history") text = "Inicio > Historial";
@@ -319,6 +320,23 @@ const Catalog = {
   sortType: "none",
   hasLoadedOnce: false,
   listenersSetup: false,
+
+  filterByCategoryAndNavigate(category) {
+    this.activeCategory = category;
+    const container = document.getElementById("categories-filter-container");
+    if (container) {
+      container.querySelectorAll(".category-btn").forEach(btn => {
+        if (btn.getAttribute("data-category") === category) {
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("active");
+        }
+      });
+    }
+    // Forzar desvanecer renderizado viejo y refrescar catálogo
+    this.renderCatalog(true);
+    App.navigateTo("catalog");
+  },
 
   init() {
     if (this.listenersSetup) return;
