@@ -1,4 +1,18 @@
-// data.js - Adaptador asíncrono para base de datos híbrida (Vercel KV Cloud / LocalStorage Fallback)
+// data.js - Adaptador para base de datos híbrida (Supabase Cloud / LocalStorage Fallback)
+
+// CONFIGURACIÓN DE SUPABASE: Reemplaza con tus claves del panel de Supabase
+const SUPABASE_URL = "https://albthufcvjftgffhauec.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsYnRodWZjdmpmdGdmZmhhdWVjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNTUxMjYsImV4cCI6MjA5NjYzMTEyNn0.yA-Wa1S7YC7lUD6_FQrPgFqRlgiOR4b9VK9jhXZqGHA";
+
+let supabaseClient = null;
+
+if (SUPABASE_URL !== "YOUR_SUPABASE_URL" && SUPABASE_KEY !== "YOUR_SUPABASE_ANON_KEY") {
+  try {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  } catch (err) {
+    console.error("Error al inicializar el cliente de Supabase:", err);
+  }
+}
 
 const PRODUCTOS_INICIALES = [
   {
@@ -115,86 +129,90 @@ const DB = {
   // Inicialización de la base de datos híbrida
   async init() {
     try {
-      // Intentar comprobar e inicializar productos
-      const productos = await this.getProductos();
-      if (productos.length === 0) {
-        await this.guardarAlmacen("ct_productos", PRODUCTOS_INICIALES);
-      }
+      if (supabaseClient) {
+        // Intentar autoinicializar productos en Supabase si la tabla está vacía
+        const productos = await this.getProductos();
+        if (productos.length === 0) {
+          await this.guardarAlmacen("ct_productos", PRODUCTOS_INICIALES);
+        }
 
-      // Intentar comprobar e inicializar usuarios
-      const usuarios = await this.getUsuarios();
-      if (usuarios.length === 0) {
-        const usuarioDemo = [
-          {
-            nombre: "Alessandro Vázquez",
-            usuario: "admin",
-            contrasena: "12345"
-          }
-        ];
-        await this.guardarAlmacen("ct_usuarios", usuarioDemo);
-      }
-
-      // Intentar comprobar e inicializar ventas
-      const ventas = await this.getVentas();
-      if (ventas === null) {
-        await this.guardarAlmacen("ct_ventas", []);
+        // Intentar autoinicializar usuarios en Supabase si la tabla está vacía
+        const usuarios = await this.getUsuarios();
+        if (usuarios.length === 0) {
+          const usuarioDemo = [
+            {
+              nombre: "Alessandro Vázquez",
+              usuario: "admin",
+              contrasena: "12345"
+            }
+          ];
+          await this.guardarAlmacen("ct_usuarios", usuarioDemo);
+        }
       }
     } catch (e) {
-      console.warn("Error inicializando base de datos en la nube. Fallback local activado:", e);
-      // Inicializar localStorage como contingencia síncrona
-      if (!localStorage.getItem("ct_productos")) {
-        localStorage.setItem("ct_productos", JSON.stringify(PRODUCTOS_INICIALES));
-      }
-      if (!localStorage.getItem("ct_usuarios")) {
-        localStorage.setItem("ct_usuarios", JSON.stringify([{ nombre: "Alessandro Vázquez", usuario: "admin", contrasena: "12345" }]));
-      }
-      if (!localStorage.getItem("ct_ventas")) {
-        localStorage.setItem("ct_ventas", JSON.stringify([]));
-      }
+      console.warn("Error al inicializar la base de datos en Supabase. Se utilizará LocalStorage:", e);
+    }
+
+    // Inicializar localStorage como contingencia
+    if (!localStorage.getItem("ct_productos")) {
+      localStorage.setItem("ct_productos", JSON.stringify(PRODUCTOS_INICIALES));
+    }
+    if (!localStorage.getItem("ct_usuarios")) {
+      localStorage.setItem("ct_usuarios", JSON.stringify([{ nombre: "Alessandro Vázquez", usuario: "admin", contrasena: "12345" }]));
+    }
+    if (!localStorage.getItem("ct_ventas")) {
+      localStorage.setItem("ct_ventas", JSON.stringify([]));
     }
   },
 
-  // Helper asíncrono para obtener del servidor o de localStorage
+  // Helper asíncrono para obtener registros desde Supabase o LocalStorage
   async obtenerAlmacen(key) {
-    try {
-      const response = await fetch(`/api/db?key=${key}`);
-      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-      
-      const data = await response.json();
-      
-      // Sincronizar localmente como copia de seguridad
-      if (data !== null) {
-        localStorage.setItem(key, JSON.stringify(data));
-        return data;
+    if (supabaseClient) {
+      try {
+        const { data, error } = await supabaseClient.from(key).select('*');
+        if (error) throw error;
+        
+        if (data !== null) {
+          // Sincronizar en local storage para respaldo offline
+          localStorage.setItem(key, JSON.stringify(data));
+          return data;
+        }
+      } catch (error) {
+        console.warn(`[SUPABASE] Error al leer la tabla '${key}'. Usando respaldo LocalStorage:`, error);
       }
-    } catch (error) {
-      console.warn(`[DB WARNING] Falló conexión a la nube para '${key}'. Usando LocalStorage:`, error);
     }
     
-    // Fallback LocalStorage
+    // Contingencia LocalStorage
     const local = localStorage.getItem(key);
     return local ? JSON.parse(local) : null;
   },
 
-  // Helper asíncrono para guardar en el servidor y en localStorage
+  // Helper asíncrono para guardar/actualizar registros en Supabase y LocalStorage
   async guardarAlmacen(key, data) {
-    // Sincronizar en LocalStorage siempre
+    // Sincronizar localmente siempre
     localStorage.setItem(key, JSON.stringify(data));
 
-    try {
-      const response = await fetch(`/api/db?key=${key}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-      return true;
-    } catch (error) {
-      console.warn(`[DB WARNING] Falló guardado en la nube para '${key}'. Sincronizado solo localmente:`, error);
-      return false;
+    if (supabaseClient) {
+      try {
+        let error = null;
+        if (key === "ct_ventas" && data.length === 0) {
+          // Si vacían el historial, vaciar la tabla en Supabase
+          const res = await supabaseClient.from(key).delete().neq('id', 'placeholder_for_clear');
+          error = res.error;
+        } else {
+          // Guardado masivo eficiente mediante UPSERT
+          const res = await supabaseClient.from(key).upsert(data);
+          error = res.error;
+        }
+
+        if (error) throw error;
+        return true;
+      } catch (error) {
+        console.warn(`[SUPABASE] Error al guardar en la tabla '${key}'. Guardado localmente:`, error);
+        return false;
+      }
     }
+    return false;
   },
 
   // --- MÉTODOS DE CONSULTA Y ESCRITURA PÚBLICOS ---
@@ -247,7 +265,7 @@ const DB = {
     return true;
   },
 
-  // Manejo de Sesión Activa (Esta siempre es local en el navegador por seguridad y persistencia de pestaña)
+  // Manejo de Sesión Activa (Local en navegador)
   setSesionActiva(usuarioInfo) {
     localStorage.setItem("ct_sesion_activa", JSON.stringify(usuarioInfo));
   },

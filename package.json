@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "npx -y http-server . -p 3000"
   },
-  "dependencies": {
-    "@vercel/kv": "^1.0.1"
-  },
+  "dependencies": {},
   "keywords": [],
   "author": "CBTA 197 Students",
   "license": "ISC"
