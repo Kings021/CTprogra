@@ -86,14 +86,14 @@ INSERT INTO ct_productos (id, nombre, categoria, precio, "codigoBarras", imagen,
 ('prod-20', 'T-Shirt Heavy Tie-Dye', 'Camisetas', 470, '7501020', 'assets/img/tshirt_heavy_tiedye.png', 'Playera pesada en corte boxy con patrón de teñido tie-dye en espiral de tonos carbón.'),
 ('prod-21', 'T-Shirt Abstract Collage', 'Camisetas', 460, '7501021', 'assets/img/tshirt_graffiti.png', 'Estampado de collage tipográfico y fotográfico abstracto en serigrafía de alta densidad.'),
 ('prod-22', 'T-Shirt Acid Butterfly', 'Camisetas', 450, '7501022', 'assets/img/tshirt_acid_butterfly.png', 'Diseño vintage acid wash con ilustración psicodélica de mariposa en el panel frontal.'),
-('prod-23', 'T-Shirt Distressed Vintage', 'Camisetas', 480, '7501023', 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=80', 'Acabados deshilachados a mano en cuello y mangas para un look destruido auténtico.'),
-('prod-24', 'T-Shirt Cyber Grid', 'Camisetas', 490, '7501024', 'https://images.unsplash.com/photo-1562157873-818bc0726f68?w=500&auto=format&fit=crop&q=80', 'Playera minimalista con gráfico de cuadrícula vectorial en tonos neón reactivos a luz UV.'),
-('prod-25', 'T-Shirt Skull & Bones', 'Camisetas', 480, '7501025', 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=80', 'Estampado clásico skate de calavera y huesos cruzados con efecto desgastado retro.'),
-('prod-26', 'T-Shirt Graffiti Tag', 'Camisetas', 430, '7501026', 'https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80', 'Firma de estilo graffiti C&Tees estampada en el pecho con pintura puff en relieve.'),
+('prod-23', 'T-Shirt Distressed Vintage', 'Camisetas', 480, '7501023', 'assets/img/tshirt_distressed_vintage.png', 'Acabados deshilachados a mano en cuello y mangas para un look destruido auténtico.'),
+('prod-24', 'T-Shirt Cyber Grid', 'Camisetas', 490, '7501024', 'assets/img/tshirt_cyber_grid.png', 'Playera minimalista con gráfico de cuadrícula vectorial en tonos neón reactivos a luz UV.'),
+('prod-25', 'T-Shirt Skull & Bones', 'Camisetas', 480, '7501025', 'assets/img/tshirt_skull_bones.png', 'Estampado clásico skate de calavera y huesos cruzados con efecto desgastado retro.'),
+('prod-26', 'T-Shirt Graffiti Tag', 'Camisetas', 430, '7501026', 'assets/img/tshirt_graffiti_tag.png', 'Firma de estilo graffiti C&Tees estampada en el pecho con pintura puff en relieve.'),
 ('prod-27', 'T-Shirt Vintage Rocker', 'Camisetas', 460, '7501027', 'assets/img/tshirt_vintage_rocker.png', 'Playera conmemorativa inspirada en los posters de giras de bandas de rock clásico de los 70s.'),
 ('prod-28', 'T-Shirt Futuristic Utility', 'Camisetas', 490, '7501028', 'assets/img/tshirt_utility.png', 'Playera táctica con bolsillo de ripstop impermeable en el pecho y hebilla de liberación rápida.'),
-('prod-29', 'T-Shirt Retro California', 'Camisetas', 420, '7501029', 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80', 'Estilo playero retro con franjas de colores cálidos al pecho en algodón ultra-suave.'),
-('prod-30', 'T-Shirt Core Basic Earth', 'Camisetas', 380, '7501030', 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=500&auto=format&fit=crop&q=80', 'Playera esencial de corte regular y tacto de melocotón ideal para combinar en capas.')
+('prod-29', 'T-Shirt Retro California', 'Camisetas', 420, '7501029', 'assets/img/tshirt_retro_california.png', 'Estilo playero retro con franjas de colores cálidos al pecho en algodón ultra-suave.'),
+('prod-30', 'T-Shirt Core Basic Earth', 'Camisetas', 380, '7501030', 'assets/img/tshirt_core_basic_earth.png', 'Playera esencial de corte regular y tacto de melocotón ideal para combinar en capas.')
 ON CONFLICT (id) DO NOTHING;
 
 -- 6. INSERCIÓN DEL USUARIO ADMINISTRADOR INICIAL
