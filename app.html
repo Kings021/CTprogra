@@ -518,8 +518,8 @@
             </div>
 
             <div class="form-group">
-              <input type="url" id="admin-prod-image" required placeholder=" ">
-              <label for="admin-prod-image">URL de la Imagen (Unsplash, Picsum, etc.)</label>
+              <input type="url" id="admin-prod-image" placeholder=" ">
+              <label for="admin-prod-image">URL de la Imagen (O bien, selecciona un archivo abajo)</label>
               <span class="line-bottom"></span>
               <div class="image-suggestions">
                 <span>Sugerencias rápidas:</span>
@@ -527,6 +527,16 @@
                 <button type="button" class="btn-suggestion-url" data-url="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop">T-Shirt</button>
                 <button type="button" class="btn-suggestion-url" data-url="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=500&auto=format&fit=crop">Pants</button>
               </div>
+            </div>
+
+            <!-- Selección de archivo local de imagen -->
+            <div class="form-group-file" style="margin-top: 15px; margin-bottom: 25px; border: 1.5px dashed #ccc; padding: 15px; text-align: center; background: rgba(0,0,0,0.01); transition: all 0.3s;" id="admin-prod-file-dropzone">
+              <label for="admin-prod-image-file" style="cursor: pointer; display: block;">
+                <i data-lucide="upload" style="width: 28px; height: 28px; color: var(--color-texto-muted); margin-bottom: 8px; stroke-width: 1.5; display: inline-block; vertical-align: middle;"></i>
+                <span style="font-size: 0.8rem; font-weight: 600; display: block; color: var(--color-texto);">Subir Imagen Local</span>
+                <span style="font-size: 0.7rem; color: var(--color-texto-muted); display: block; margin-top: 4px;" id="file-upload-status">Seleccionar archivo...</span>
+              </label>
+              <input type="file" id="admin-prod-image-file" accept="image/*" style="display: none;">
             </div>
 
             <button type="submit" class="btn btn-primary btn-full-width" id="btn-admin-submit">

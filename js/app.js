@@ -774,6 +774,7 @@ const Catalog = {
 // Admin Screen Logic
 const Admin = {
   listenersSetup: false,
+  uploadedImageBase64: "",
 
   initAdminScreen() {
     this.setupListeners();
@@ -1002,6 +1003,78 @@ const Admin = {
       });
     }
 
+    // Lector de archivo de imagen local y Drag-and-drop
+    const fileInput = document.getElementById("admin-prod-image-file");
+    const dropzone = document.getElementById("admin-prod-file-dropzone");
+    const uploadStatus = document.getElementById("file-upload-status");
+
+    if (fileInput) {
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            this.uploadedImageBase64 = event.target.result;
+            // Limpiar el input de la URL si se sube archivo
+            if (imageInput) {
+              imageInput.value = "";
+              imageInput.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            if (uploadStatus) uploadStatus.textContent = file.name;
+            if (dropzone) {
+              dropzone.style.borderColor = "#2ecc71";
+              dropzone.style.background = "rgba(46, 204, 113, 0.05)";
+            }
+            this.renderPreview();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    if (dropzone && fileInput) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropzone.style.borderColor = "var(--color-acento)";
+          dropzone.style.background = "rgba(0,0,0,0.05)";
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          if (eventName === 'dragleave') {
+            dropzone.style.borderColor = "#ccc";
+            dropzone.style.background = "rgba(0,0,0,0.01)";
+          }
+        }, false);
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length) {
+          fileInput.files = files;
+          fileInput.dispatchEvent(new Event('change'));
+        }
+      }, false);
+    }
+
+    if (imageInput) {
+      imageInput.addEventListener("input", () => {
+        if (imageInput.value.trim()) {
+          this.uploadedImageBase64 = "";
+          if (fileInput) fileInput.value = "";
+          if (uploadStatus) uploadStatus.textContent = "Seleccionar archivo...";
+          if (dropzone) {
+            dropzone.style.borderColor = "#ccc";
+            dropzone.style.background = "rgba(0,0,0,0.01)";
+          }
+        }
+      });
+    }
+
     this.listenersSetup = true;
   },
 
@@ -1010,7 +1083,8 @@ const Admin = {
     const category = document.getElementById("admin-prod-category")?.value || "CATEGORÍA";
     const price = parseFloat(document.getElementById("admin-prod-price")?.value) || 0;
     const barcode = document.getElementById("admin-prod-barcode")?.value || "0000000";
-    const image = document.getElementById("admin-prod-image")?.value || "https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?w=500&auto=format&fit=crop";
+    const imageInputVal = document.getElementById("admin-prod-image")?.value.trim();
+    const image = this.uploadedImageBase64 || imageInputVal || "https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?w=500&auto=format&fit=crop";
 
     const container = document.getElementById("admin-card-preview-container");
     if (!container) return;
@@ -1054,10 +1128,10 @@ const Admin = {
     const category = document.getElementById("admin-prod-category")?.value;
     const price = parseFloat(document.getElementById("admin-prod-price")?.value);
     const barcode = document.getElementById("admin-prod-barcode")?.value.trim();
-    const image = document.getElementById("admin-prod-image")?.value.trim();
+    const image = this.uploadedImageBase64 || document.getElementById("admin-prod-image")?.value.trim();
 
     if (!name || !category || isNaN(price) || !barcode || !image) {
-      UI.showToast("Todos los campos son obligatorios", "warning");
+      UI.showToast("Todos los campos son obligatorios (incluyendo la imagen)", "warning");
       return;
     }
 
@@ -1085,6 +1159,14 @@ const Admin = {
 
     // Resetear formulario y preview
     form.reset();
+    this.uploadedImageBase64 = "";
+    const uploadStatus = document.getElementById("file-upload-status");
+    if (uploadStatus) uploadStatus.textContent = "Seleccionar archivo...";
+    const dropzone = document.getElementById("admin-prod-file-dropzone");
+    if (dropzone) {
+      dropzone.style.borderColor = "#ccc";
+      dropzone.style.background = "rgba(0,0,0,0.01)";
+    }
     
     // Forzar actualización de etiquetas flotantes vacías disparando eventos
     form.querySelectorAll("input").forEach(input => {
