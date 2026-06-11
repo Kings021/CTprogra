@@ -228,7 +228,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 430,
     codigoBarras: "7501015",
-    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_minimal_rose.png",
     descripcion: "Silueta clásica de C&Tees con una rosa bordada en hilo de seda de alta densidad en el pecho.",
     colores: [
       { nombre: "Hueso",         hex: "#f7f1e3" },
@@ -256,7 +256,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 490,
     codigoBarras: "7501017",
-    imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_techno_grid.png",
     descripcion: "Camiseta de ajuste regular con diseño minimalista reflectante de alta visibilidad inspirado en la estética rave industrial.",
     colores: [
       { nombre: "Gris Reflectivo", hex: "#b2bec3" },
@@ -282,7 +282,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 450,
     codigoBarras: "7501019",
-    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_retro_anime.png",
     descripcion: "Playera urbana con estampado posterior de ilustración estilo manga/anime noventero.",
     colores: [
       { nombre: "Negro",         hex: "#1e272e" },
@@ -309,7 +309,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 460,
     codigoBarras: "7501021",
-    imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_graffiti.png",
     descripcion: "Estampado de collage tipográfico y fotográfico abstracto en serigrafía de alta densidad.",
     colores: [
       { nombre: "Blanco Off-White", hex: "#f5f6fa" },
@@ -322,7 +322,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 450,
     codigoBarras: "7501022",
-    imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_acid_butterfly.png",
     descripcion: "Diseño vintage acid wash con ilustración psicodélica de mariposa en el panel frontal.",
     colores: [
       { nombre: "Negro Lavado",  hex: "#353b48" },
@@ -348,7 +348,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 490,
     codigoBarras: "7501024",
-    imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_techno_grid.png",
     descripcion: "Playera minimalista con gráfico de cuadrícula vectorial en tonos neón reactivos a luz UV.",
     colores: [
       { nombre: "Negro",         hex: "#1e272e" },
@@ -374,7 +374,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 430,
     codigoBarras: "7501026",
-    imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_graffiti.png",
     descripcion: "Firma de estilo graffiti C&Tees estampada en el pecho con pintura puff en relieve.",
     colores: [
       { nombre: "Blanco",        hex: "#ffffff" },
@@ -388,7 +388,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 460,
     codigoBarras: "7501027",
-    imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_vintage_rocker.png",
     descripcion: "Playera conmemorativa inspirada en los posters de giras de bandas de rock clásico de los 70s.",
     colores: [
       { nombre: "Carbón Lavado", hex: "#34495e" },
@@ -401,7 +401,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 490,
     codigoBarras: "7501028",
-    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_utility.png",
     descripcion: "Playera táctica con bolsillo de ripstop impermeable en el pecho y hebilla de liberación rápida.",
     colores: [
       { nombre: "Negro Táctico", hex: "#1e272e" },
@@ -428,7 +428,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 380,
     codigoBarras: "7501030",
-    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    imagen: "assets/img/tshirt_white.png",
     descripcion: "Playera esencial de corte regular y tacto de melocotón ideal para combinar en capas.",
     colores: [
       { nombre: "Café Tierra",   hex: "#8c7ae6" },
