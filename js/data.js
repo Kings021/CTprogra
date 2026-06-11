@@ -194,6 +194,74 @@ const PRODUCTOS_INICIALES = [
       { nombre: "Negro/Blanco",  hex: "#1a1a1a" },
       { nombre: "Gris Marl",     hex: "#9a9a8a" }
     ]
+  },
+  {
+    id: "prod-13",
+    nombre: "T-Shirt Cyberpunk Tokyo",
+    categoria: "Camisetas",
+    precio: 480,
+    codigoBarras: "7501013",
+    imagen: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Camiseta gráfica pesada con impresión digital frontal inspirada en la tipografía urbana de Tokio.",
+    colores: [
+      { nombre: "Negro Cyber",   hex: "#111111" },
+      { nombre: "Naranja Neón",  hex: "#ff5e00" },
+      { nombre: "Violeta",       hex: "#8a2be2" }
+    ]
+  },
+  {
+    id: "prod-14",
+    nombre: "T-Shirt Boxy Acid Wash",
+    categoria: "Camisetas",
+    precio: 460,
+    codigoBarras: "7501014",
+    imagen: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Corte boxy fit pesado con teñido artesanal acid wash y costuras reforzadas a contraste.",
+    colores: [
+      { nombre: "Gris Ácido",    hex: "#444444" },
+      { nombre: "Azul Deslavado", hex: "#4b6584" }
+    ]
+  },
+  {
+    id: "prod-15",
+    nombre: "T-Shirt Minimal Rose",
+    categoria: "Camisetas",
+    precio: 430,
+    codigoBarras: "7501015",
+    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Silueta clásica de C&Tees con una rosa bordada en hilo de seda de alta densidad en el pecho.",
+    colores: [
+      { nombre: "Hueso",         hex: "#f7f1e3" },
+      { nombre: "Rosa Pálido",   hex: "#ffb8b8" },
+      { nombre: "Negro Mate",    hex: "#222222" }
+    ]
+  },
+  {
+    id: "prod-16",
+    nombre: "T-Shirt Skate Retro 90s",
+    categoria: "Camisetas",
+    precio: 470,
+    codigoBarras: "7501016",
+    imagen: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Prenda de algodón premium inspirada en la época de oro del skate y hip-hop de los 90s.",
+    colores: [
+      { nombre: "Mostaza Retro", hex: "#cc8e35" },
+      { nombre: "Verde Pino",    hex: "#218c74" },
+      { nombre: "Azul Marino",   hex: "#0c2461" }
+    ]
+  },
+  {
+    id: "prod-17",
+    nombre: "T-Shirt Techno Industrial",
+    categoria: "Camisetas",
+    precio: 490,
+    codigoBarras: "7501017",
+    imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Camiseta de ajuste regular con diseño minimalista reflectante de alta visibilidad inspirado en la estética rave industrial.",
+    colores: [
+      { nombre: "Gris Reflectivo", hex: "#b2bec3" },
+      { nombre: "Negro Carbón",   hex: "#2d3436" }
+    ]
   }
 ];
 
@@ -243,31 +311,47 @@ const DB = {
       console.warn("Error al inicializar la base de datos en Supabase. Se utilizará LocalStorage:", e);
     }
 
-    // Inicializar localStorage como contingencia
-    if (!localStorage.getItem("ct_productos")) {
+    // Inicializar localStorage como contingencia o actualizar si hay nuevos productos iniciales
+    const storedProds = localStorage.getItem("ct_productos");
+    if (!storedProds) {
       localStorage.setItem("ct_productos", JSON.stringify(PRODUCTOS_INICIALES));
     } else {
-      // Sincronizar imágenes iniciales locales en localStorage
       try {
-        let prods = JSON.parse(localStorage.getItem("ct_productos"));
+        let prods = JSON.parse(storedProds);
         let updated = false;
-        prods = prods.map(p => {
-          const matchingInicial = PRODUCTOS_INICIALES.find(initP => initP.id === p.id);
-          if (matchingInicial && p.imagen !== matchingInicial.imagen) {
-            p.imagen = matchingInicial.imagen;
+        
+        // Agregar nuevos productos iniciales que falten
+        PRODUCTOS_INICIALES.forEach(initP => {
+          if (!prods.some(p => p.id === initP.id)) {
+            prods.push(initP);
             updated = true;
           }
-          if (matchingInicial && JSON.stringify(p.colores) !== JSON.stringify(matchingInicial.colores)) {
-            p.colores = matchingInicial.colores;
-            updated = true;
+        });
+
+        // Sincronizar imágenes y colores por si acaso
+        prods = prods.map(p => {
+          const matchingInicial = PRODUCTOS_INICIALES.find(initP => initP.id === p.id);
+          if (matchingInicial) {
+            if (p.imagen !== matchingInicial.imagen && !p.imagen.startsWith("data:")) {
+              p.imagen = matchingInicial.imagen;
+              updated = true;
+            }
+            if (JSON.stringify(p.colores) !== JSON.stringify(matchingInicial.colores)) {
+              p.colores = matchingInicial.colores;
+              updated = true;
+            }
           }
           return p;
         });
+
         if (updated) {
           localStorage.setItem("ct_productos", JSON.stringify(prods));
+          if (supabaseClient) {
+            await this.guardarAlmacen("ct_productos", prods);
+          }
         }
       } catch (err) {
-        console.error("Error al actualizar imágenes locales en localStorage:", err);
+        console.error("Error al actualizar productos iniciales en localStorage:", err);
       }
     }
     if (!localStorage.getItem("ct_usuarios")) {
