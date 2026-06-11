@@ -181,6 +181,11 @@ const App = {
     // Cerrar el carrito por si acaso
     if (typeof Cart !== 'undefined') Cart.closeCart();
 
+    // Detener cámara si cambiamos de pantalla
+    if (typeof Scanner !== 'undefined' && Scanner.stopCameraScanner) {
+      Scanner.stopCameraScanner();
+    }
+
     const switchScreens = () => {
       // Remover clase activa de todas las pantallas
       document.querySelectorAll(".spa-screen").forEach(screen => {

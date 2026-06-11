@@ -412,6 +412,10 @@
             <div class="scanner-placeholder-content">
               <i data-lucide="scan" class="scanner-icon-main"></i>
               <p>Esperando lectura de código...</p>
+              <button type="button" class="btn btn-primary btn-sm" id="btn-toggle-camera" onclick="Scanner.toggleCamera()" style="margin-top: 15px; border-radius: 0px; z-index: 5; background: var(--color-acento); border-color: var(--color-acento);">
+                <i data-lucide="camera" style="width:14px; height:14px; display:inline-block; vertical-align:middle; margin-right:6px;"></i>
+                <span id="btn-camera-text">Activar Cámara</span>
+              </button>
             </div>
           </div>
         </div>
@@ -423,6 +427,22 @@
           
           <div class="barcode-buttons-grid" id="barcode-demo-grid">
             <!-- Botones inyectados dinámicamente desde el JS -->
+          </div>
+
+          <!-- Lector Físico y Manual Input -->
+          <div class="real-scanner-wrapper" style="margin-bottom: 25px;">
+            <div class="form-group" style="margin-bottom: 5px;">
+              <input type="text" id="real-scanner-input" placeholder=" " autocomplete="off">
+              <label for="real-scanner-input">
+                <i data-lucide="barcode" style="width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:5px; margin-top:-2px;"></i>
+                Escáner real o código manual...
+              </label>
+              <span class="line-bottom"></span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--color-texto-muted); margin-top: 5px; display: flex; align-items: center; gap: 4px;">
+              <i data-lucide="info" style="width: 12px; height: 12px;"></i> 
+              El sistema detecta escaneos automáticamente desde cualquier pantalla.
+            </p>
           </div>
 
           <!-- Resultado del Escaneo con Materialización -->
@@ -769,6 +789,9 @@
 
   <!-- Supabase JS Client SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- HTML5 QR Code / Barcode Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
   <!-- JS Modules -->
   <script src="js/data.js"></script>

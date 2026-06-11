@@ -2,6 +2,8 @@
 
 const Scanner = {
   isScanning: false,
+  html5QrCode: null,
+  isCameraActive: false,
   barcodeDemoData: [
     { label: "Oversized T-Shirt", code: "7501001" },
     { label: "Cargo Pants", code: "7501003" },
@@ -17,6 +19,147 @@ const Scanner = {
     const resultContainer = document.getElementById("scanned-result");
     if (resultContainer && !this.isScanning) {
       resultContainer.classList.add("hidden");
+    }
+
+    // Auto-enfocar el input del escáner real para facilitar el escaneo directo
+    const realInput = document.getElementById("real-scanner-input");
+    if (realInput) {
+      realInput.value = "";
+      setTimeout(() => {
+        realInput.focus();
+      }, 100);
+
+      // Evento para procesar entrada manual o escáner enfocado
+      if (!realInput.dataset.listenerActive) {
+        realInput.dataset.listenerActive = "true";
+        realInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const barcode = realInput.value.trim();
+            if (barcode) {
+              this.simulateScan(barcode);
+              realInput.value = "";
+            }
+          }
+        });
+      }
+    }
+  },
+
+  async toggleCamera() {
+    if (this.isCameraActive) {
+      await this.stopCameraScanner();
+    } else {
+      await this.startCameraScanner();
+    }
+  },
+
+  async startCameraScanner() {
+    const viewport = document.getElementById("scanner-viewport");
+    if (!viewport) return;
+
+    let readerDiv = document.getElementById("camera-reader");
+    if (!readerDiv) {
+      readerDiv = document.createElement("div");
+      readerDiv.id = "camera-reader";
+      readerDiv.style.width = "100%";
+      readerDiv.style.height = "100%";
+      readerDiv.style.position = "absolute";
+      readerDiv.style.top = "0";
+      readerDiv.style.left = "0";
+      readerDiv.style.zIndex = "1";
+      viewport.appendChild(readerDiv);
+    }
+
+    const placeholder = viewport.querySelector(".scanner-placeholder-content");
+
+    const btnText = document.getElementById("btn-camera-text");
+    if (btnText) btnText.textContent = "Detener Cámara";
+
+    try {
+      this.html5QrCode = new Html5Qrcode("camera-reader");
+      
+      await this.html5QrCode.start(
+        { facingMode: "environment" },
+        {
+          fps: 15,
+          qrbox: (width, height) => {
+            const boxWidth = Math.min(width * 0.8, 280);
+            const boxHeight = Math.min(height * 0.4, 130);
+            return { width: boxWidth, height: boxHeight };
+          },
+          aspectRatio: 1.0,
+          formatsToSupport: [ 
+            Html5QrcodeSupportedFormats.QR_CODE, 
+            Html5QrcodeSupportedFormats.EAN_13, 
+            Html5QrcodeSupportedFormats.EAN_8, 
+            Html5QrcodeSupportedFormats.CODE_128, 
+            Html5QrcodeSupportedFormats.UPC_A, 
+            Html5QrcodeSupportedFormats.UPC_E 
+          ]
+        },
+        (decodedText) => {
+          this.stopCameraScanner();
+          this.simulateScan(decodedText);
+        },
+        (errorMessage) => {
+          // Ignorar errores continuos de lectura
+        }
+      );
+
+      this.isCameraActive = true;
+      
+      if (placeholder) {
+        placeholder.style.position = "absolute";
+        placeholder.style.bottom = "20px";
+        placeholder.style.left = "50%";
+        placeholder.style.transform = "translateX(-50%)";
+        placeholder.style.zIndex = "10";
+        const icon = placeholder.querySelector(".scanner-icon-main");
+        const p = placeholder.querySelector("p");
+        if (icon) icon.style.display = "none";
+        if (p) p.style.display = "none";
+      }
+
+    } catch (err) {
+      console.error("No se pudo iniciar la cámara:", err);
+      UI.showToast("Permiso denegado o cámara no disponible", "error");
+      await this.stopCameraScanner();
+    }
+  },
+
+  async stopCameraScanner() {
+    const viewport = document.getElementById("scanner-viewport");
+    const placeholder = viewport?.querySelector(".scanner-placeholder-content");
+    if (placeholder) {
+      placeholder.style.position = "";
+      placeholder.style.bottom = "";
+      placeholder.style.left = "";
+      placeholder.style.transform = "";
+      placeholder.style.zIndex = "";
+      const icon = placeholder.querySelector(".scanner-icon-main");
+      const p = placeholder.querySelector("p");
+      if (icon) icon.style.display = "";
+      if (p) p.style.display = "";
+    }
+
+    const btnText = document.getElementById("btn-camera-text");
+    if (btnText) btnText.textContent = "Activar Cámara";
+
+    this.isCameraActive = false;
+
+    if (this.html5QrCode) {
+      try {
+        await this.html5QrCode.stop();
+      } catch (e) {
+        console.warn("Error stopping html5QrCode:", e);
+      }
+      this.html5QrCode = null;
+    }
+
+    const readerDiv = document.getElementById("camera-reader");
+    if (readerDiv) {
+      readerDiv.remove();
     }
   },
 
@@ -150,3 +293,61 @@ scannerStyle.innerHTML = `
 }
 `;
 document.head.appendChild(scannerStyle);
+
+// --- Detección global de escáner de códigos de barras (lector USB/Bluetooth) ---
+let globalBarcodeBuffer = "";
+let lastKeypressTime = 0;
+
+window.addEventListener("keydown", (e) => {
+  // Ignorar si el usuario está en medio de presionar teclas de control o similares
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+
+  const now = Date.now();
+  const timeDiff = now - lastKeypressTime;
+  lastKeypressTime = now;
+
+  // Si el usuario está escribiendo en el input de registro de productos, login, etc., omitimos el lector global
+  const activeEl = document.activeElement;
+  const isWritingInOtherInput = activeEl && 
+    (activeEl.tagName === "INPUT" || activeEl.tagName === "TEXTAREA") && 
+    activeEl.id !== "real-scanner-input" &&
+    activeEl.id !== "catalog-search-input";
+
+  if (isWritingInOtherInput) {
+    globalBarcodeBuffer = "";
+    return;
+  }
+
+  // Los escáneres reales simulan pulsaciones de teclas extremadamente veloces (< 50ms).
+  // Si la pausa entre teclas es mayor a 50ms, reseteamos el buffer de código.
+  if (timeDiff > 50 && globalBarcodeBuffer.length > 0) {
+    globalBarcodeBuffer = "";
+  }
+
+  // Si es la tecla Enter, procesamos lo acumulado
+  if (e.key === "Enter") {
+    if (globalBarcodeBuffer.length >= 3) {
+      e.preventDefault();
+      const code = globalBarcodeBuffer;
+      globalBarcodeBuffer = "";
+      
+      // Si no estamos en la pantalla del escáner, navegamos a ella para mostrar la animación
+      if (typeof App !== "undefined" && App.activeScreenId !== "scanner") {
+        App.navigateTo("scanner");
+      }
+      
+      setTimeout(() => {
+        Scanner.simulateScan(code);
+      }, 150);
+    } else {
+      globalBarcodeBuffer = "";
+    }
+    return;
+  }
+
+  // Acumular solo caracteres imprimibles sencillos
+  if (e.key.length === 1) {
+    globalBarcodeBuffer += e.key;
+  }
+});
+
