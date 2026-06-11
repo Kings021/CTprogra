@@ -545,9 +545,17 @@ const Catalog = {
             </p>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--color-texto-muted);">
-            <i data-lucide="barcode" style="width: 16px; height: 16px;"></i>
-            <span>Código de Barras: <strong>${p.codigoBarras}</strong></span>
+          <div style="border-top: 1px solid rgba(0,0,0,0.08); padding-top: 15px; margin-top: 5px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 120px;">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--color-texto); margin-bottom: 5px;">
+                <i data-lucide="barcode" style="width: 16px; height: 16px; color: var(--color-acento);"></i>
+                <span>Código: <strong>${p.codigoBarras}</strong></span>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--color-texto-muted);">Escanea este QR con tu celular en la sección de escáner.</span>
+            </div>
+            <div style="background: white; padding: 6px; border: var(--border-glow); display: inline-flex; align-items: center; justify-content: center;">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(p.codigoBarras)}" alt="QR Code" style="width: 80px; height: 80px; display: block;" onerror="this.src='https://quickchart.io/qr?text=${encodeURIComponent(p.codigoBarras)}&size=80'">
+            </div>
           </div>
         </div>
       </div>
@@ -1090,7 +1098,7 @@ const Admin = {
     if (!container) return;
 
     container.innerHTML = `
-      <div class="product-card" style="width: 100%;">
+      <div class="product-card" style="width: 100%; margin-bottom: 20px;">
         <div class="product-card-img-wrapper">
           <img src="${image}" alt="${name}" class="product-card-img">
           <div class="product-card-overlay">
@@ -1108,6 +1116,13 @@ const Admin = {
             <span class="product-card-barcode-badge"><i data-lucide="barcode" style="width:10px; height:10px; display:inline-block; vertical-align:middle;"></i> ${barcode}</span>
           </div>
         </div>
+      </div>
+      
+      <!-- Preview de Código QR Generado -->
+      <div style="background: white; border: var(--border-glow); padding: 15px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+        <span style="font-size: 0.75rem; font-weight: 700; color: #111; letter-spacing: 1px;">CÓDIGO QR GENERADO (API)</span>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(barcode)}" alt="QR Code Preview" style="width: 120px; height: 120px; display: block;" onerror="this.src='https://quickchart.io/qr?text=${encodeURIComponent(barcode)}&size=120'">
+        <span style="font-family: monospace; font-size: 0.75rem; color: var(--color-texto-muted);">${barcode}</span>
       </div>
     `;
 
