@@ -262,6 +262,179 @@ const PRODUCTOS_INICIALES = [
       { nombre: "Gris Reflectivo", hex: "#b2bec3" },
       { nombre: "Negro Carbón",   hex: "#2d3436" }
     ]
+  },
+  {
+    id: "prod-18",
+    nombre: "T-Shirt Gothic Chrome",
+    categoria: "Camisetas",
+    precio: 440,
+    codigoBarras: "7501018",
+    imagen: "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Chamarra / Playera manga corta holgada con gráfico tipográfico estilo gótico metálico.",
+    colores: [
+      { nombre: "Plata Cromo",   hex: "#dfe6e9" },
+      { nombre: "Negro Profundo", hex: "#000000" }
+    ]
+  },
+  {
+    id: "prod-19",
+    nombre: "T-Shirt Retro Anime",
+    categoria: "Camisetas",
+    precio: 450,
+    codigoBarras: "7501019",
+    imagen: "https://images.unsplash.com/photo-1503342394128-c104d54dba01?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Playera urbana con estampado posterior de ilustración estilo manga/anime noventero.",
+    colores: [
+      { nombre: "Negro",         hex: "#1e272e" },
+      { nombre: "Blanco",        hex: "#ffffff" },
+      { nombre: "Lila Pastel",   hex: "#d2dae2" }
+    ]
+  },
+  {
+    id: "prod-20",
+    nombre: "T-Shirt Heavy Tie-Dye",
+    categoria: "Camisetas",
+    precio: 470,
+    codigoBarras: "7501020",
+    imagen: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Playera pesada en corte boxy con patrón de teñido tie-dye en espiral de tonos carbón.",
+    colores: [
+      { nombre: "Gris Tie-Dye",  hex: "#718093" },
+      { nombre: "Azul Tie-Dye",  hex: "#273c75" }
+    ]
+  },
+  {
+    id: "prod-21",
+    nombre: "T-Shirt Abstract Collage",
+    categoria: "Camisetas",
+    precio: 460,
+    codigoBarras: "7501021",
+    imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Estampado de collage tipográfico y fotográfico abstracto en serigrafía de alta densidad.",
+    colores: [
+      { nombre: "Blanco Off-White", hex: "#f5f6fa" },
+      { nombre: "Gris Carbón",   hex: "#2f3640" }
+    ]
+  },
+  {
+    id: "prod-22",
+    nombre: "T-Shirt Acid Butterfly",
+    categoria: "Camisetas",
+    precio: 450,
+    codigoBarras: "7501022",
+    imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Diseño vintage acid wash con ilustración psicodélica de mariposa en el panel frontal.",
+    colores: [
+      { nombre: "Negro Lavado",  hex: "#353b48" },
+      { nombre: "Verde Ácido",   hex: "#44bd32" }
+    ]
+  },
+  {
+    id: "prod-23",
+    nombre: "T-Shirt Distressed Vintage",
+    categoria: "Camisetas",
+    precio: 480,
+    codigoBarras: "7501023",
+    imagen: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Acabados deshilachados a mano en cuello y mangas para un look destruido auténtico.",
+    colores: [
+      { nombre: "Gris Destruido", hex: "#7f8c8d" },
+      { nombre: "Hueso",         hex: "#f5f6fa" }
+    ]
+  },
+  {
+    id: "prod-24",
+    nombre: "T-Shirt Cyber Grid",
+    categoria: "Camisetas",
+    precio: 490,
+    codigoBarras: "7501024",
+    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Playera minimalista con gráfico de cuadrícula vectorial en tonos neón reactivos a luz UV.",
+    colores: [
+      { nombre: "Negro",         hex: "#1e272e" },
+      { nombre: "Verde UV",      hex: "#00d2d3" }
+    ]
+  },
+  {
+    id: "prod-25",
+    nombre: "T-Shirt Skull & Bones",
+    categoria: "Camisetas",
+    precio: 480,
+    codigoBarras: "7501025",
+    imagen: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Estampado clásico skate de calavera y huesos cruzados con efecto desgastado retro.",
+    colores: [
+      { nombre: "Negro Ácido",   hex: "#2c3e50" },
+      { nombre: "Crema Hueso",   hex: "#f1f2f6" }
+    ]
+  },
+  {
+    id: "prod-26",
+    nombre: "T-Shirt Graffiti Tag",
+    categoria: "Camisetas",
+    precio: 430,
+    codigoBarras: "7501026",
+    imagen: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Firma de estilo graffiti C&Tees estampada en el pecho con pintura puff en relieve.",
+    colores: [
+      { nombre: "Blanco",        hex: "#ffffff" },
+      { nombre: "Amarillo Tag",  hex: "#f1c40f" },
+      { nombre: "Negro",         hex: "#2c3e50" }
+    ]
+  },
+  {
+    id: "prod-27",
+    nombre: "T-Shirt Vintage Rocker",
+    categoria: "Camisetas",
+    precio: 460,
+    codigoBarras: "7501027",
+    imagen: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Playera conmemorativa inspirada en los posters de giras de bandas de rock clásico de los 70s.",
+    colores: [
+      { nombre: "Carbón Lavado", hex: "#34495e" },
+      { nombre: "Azul Denim",    hex: "#2980b9" }
+    ]
+  },
+  {
+    id: "prod-28",
+    nombre: "T-Shirt Futuristic Utility",
+    categoria: "Camisetas",
+    precio: 490,
+    codigoBarras: "7501028",
+    imagen: "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Playera táctica con bolsillo de ripstop impermeable en el pecho y hebilla de liberación rápida.",
+    colores: [
+      { nombre: "Negro Táctico", hex: "#1e272e" },
+      { nombre: "Verde Oliva",   hex: "#27ae60" }
+    ]
+  },
+  {
+    id: "prod-29",
+    nombre: "T-Shirt Retro California",
+    categoria: "Camisetas",
+    precio: 420,
+    codigoBarras: "7501029",
+    imagen: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Estilo playero retro con franjas de colores cálidos al pecho en algodón ultra-suave.",
+    colores: [
+      { nombre: "Crema Arena",   hex: "#f5f6fa" },
+      { nombre: "Azul Celeste",  hex: "#00a8ff" },
+      { nombre: "Amarillo Sol",  hex: "#fbc531" }
+    ]
+  },
+  {
+    id: "prod-30",
+    nombre: "T-Shirt Core Basic Earth",
+    categoria: "Camisetas",
+    precio: 380,
+    codigoBarras: "7501030",
+    imagen: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+    descripcion: "Playera esencial de corte regular y tacto de melocotón ideal para combinar en capas.",
+    colores: [
+      { nombre: "Café Tierra",   hex: "#8c7ae6" },
+      { nombre: "Arena Fina",    hex: "#e1b12c" },
+      { nombre: "Hueso Natural", hex: "#f5f6fa" }
+    ]
   }
 ];
 
@@ -275,20 +448,33 @@ const DB = {
         if (productos.length === 0) {
           await this.guardarAlmacen("ct_productos", PRODUCTOS_INICIALES);
         } else {
-          // Sincronizar imágenes iniciales locales en Supabase si ya existe la tabla
+          // Fusionar nuevos productos iniciales a Supabase
           let updated = false;
-          const updatedProds = productos.map(p => {
-            const matchingInicial = PRODUCTOS_INICIALES.find(initP => initP.id === p.id);
-            if (matchingInicial && p.imagen !== matchingInicial.imagen) {
-              p.imagen = matchingInicial.imagen;
+          let merged = [...productos];
+          
+          PRODUCTOS_INICIALES.forEach(initP => {
+            if (!merged.some(p => p.id === initP.id)) {
+              merged.push(initP);
               updated = true;
             }
-            if (matchingInicial && JSON.stringify(p.colores) !== JSON.stringify(matchingInicial.colores)) {
-              p.colores = matchingInicial.colores;
-              updated = true;
+          });
+
+          // Sincronizar imágenes iniciales locales en Supabase si ya existe la tabla
+          const updatedProds = merged.map(p => {
+            const matchingInicial = PRODUCTOS_INICIALES.find(initP => initP.id === p.id);
+            if (matchingInicial) {
+              if (p.imagen !== matchingInicial.imagen && !p.imagen.startsWith("data:")) {
+                p.imagen = matchingInicial.imagen;
+                updated = true;
+              }
+              if (JSON.stringify(p.colores) !== JSON.stringify(matchingInicial.colores)) {
+                p.colores = matchingInicial.colores;
+                updated = true;
+              }
             }
             return p;
           });
+
           if (updated) {
             await this.guardarAlmacen("ct_productos", updatedProds);
           }
