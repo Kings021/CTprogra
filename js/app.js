@@ -367,37 +367,23 @@ const Catalog = {
   },
 
   getCarouselImages(p) {
-    const defaultSlides = {
-      "Camisetas": [
-        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=700&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=700&auto=format&fit=crop&q=80"
-      ],
-      "Sudaderas": [
-        "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=700&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1621905252507-b354bc25edac?w=700&auto=format&fit=crop&q=80"
-      ],
-      "Pants": [
-        "https://images.unsplash.com/photo-1517423568366-8b83523034fd?w=700&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?w=700&auto=format&fit=crop&q=80"
-      ],
-      "Chamarras": [
-        "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=700&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&auto=format&fit=crop&q=80"
-      ],
-      "Gorras": [
-        "https://images.unsplash.com/photo-1576871337622-98d48d4aa53e?w=700&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1534215754734-18e55d13ce35?w=700&auto=format&fit=crop&q=80"
-      ],
-      "Shorts": [
-        "https://images.unsplash.com/photo-1539185441755-769473a23570?w=700&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1604176354204-9268737828e4?w=700&auto=format&fit=crop&q=80"
-      ]
-    };
-    const categorySlides = defaultSlides[p.categoria] || [
-      "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=700&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&auto=format&fit=crop&q=80"
-    ];
-    return [p.imagen, ...categorySlides];
+    let backImage = p.imagenTrasera;
+    if (!backImage) {
+      if (p.imagen.includes("tshirt_cyberpunk")) {
+        backImage = "assets/img/tshirt_cyberpunk_back.png";
+      } else if (p.imagen.includes("tshirt_gothic_chrome")) {
+        backImage = "assets/img/tshirt_gothic_chrome_back.png";
+      } else if (p.imagen.includes("tshirt_retro_anime")) {
+        backImage = "assets/img/tshirt_retro_anime_back.png";
+      } else if (p.imagen.includes("tshirt_white") || p.imagen.includes("minimal_rose") || p.imagen.includes("graffiti")) {
+        backImage = "assets/img/tshirt_white.png";
+      } else if (p.imagen.includes("tshirt_vintage") || p.imagen.includes("techno_grid") || p.imagen.includes("acid_butterfly") || p.imagen.includes("utility") || p.imagen.includes("vintage_rocker")) {
+        backImage = "assets/img/tshirt_vintage.png";
+      } else {
+        backImage = p.imagen;
+      }
+    }
+    return [p.imagen, backImage, p.imagen];
   },
 
   async showProductDetail(productId) {
