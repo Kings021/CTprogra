@@ -365,27 +365,6 @@ const Catalog = {
     this.renderCatalog(true);
     App.navigateTo("catalog");
   },
-
-  getCarouselImages(p) {
-    let backImage = p.imagenTrasera;
-    if (!backImage) {
-      if (p.imagen.includes("tshirt_cyberpunk")) {
-        backImage = "assets/img/tshirt_cyberpunk_back.png";
-      } else if (p.imagen.includes("tshirt_gothic_chrome")) {
-        backImage = "assets/img/tshirt_gothic_chrome_back.png";
-      } else if (p.imagen.includes("tshirt_retro_anime")) {
-        backImage = "assets/img/tshirt_retro_anime_back.png";
-      } else if (p.imagen.includes("tshirt_white") || p.imagen.includes("minimal_rose") || p.imagen.includes("graffiti")) {
-        backImage = "assets/img/tshirt_white.png";
-      } else if (p.imagen.includes("tshirt_vintage") || p.imagen.includes("techno_grid") || p.imagen.includes("acid_butterfly") || p.imagen.includes("utility") || p.imagen.includes("vintage_rocker")) {
-        backImage = "assets/img/tshirt_vintage.png";
-      } else {
-        backImage = p.imagen;
-      }
-    }
-    return [p.imagen, backImage, p.imagen];
-  },
-
   async showProductDetail(productId) {
     const productos = await DB.getProductos();
     const p = productos.find(prod => prod.id === productId);
@@ -397,32 +376,6 @@ const Catalog = {
     if (content) {
       content.style.maxWidth = "900px";
     }
-
-    // Registrar funciones globales para interactividad
-    window.moveModalCarousel = (direction) => {
-      const track = document.getElementById("modal-carousel-track");
-      if (!track) return;
-      const slides = track.querySelectorAll(".carousel-slide");
-      let activeIndex = parseInt(track.getAttribute("data-active-index") || "0");
-      
-      activeIndex += direction;
-      if (activeIndex < 0) activeIndex = slides.length - 1;
-      if (activeIndex >= slides.length) activeIndex = 0;
-      
-      track.setAttribute("data-active-index", activeIndex);
-      track.style.transform = `translateX(-${activeIndex * (100 / slides.length)}%)`;
-      
-      const dots = document.querySelectorAll(".carousel-dot");
-      dots.forEach((dot, idx) => {
-        if (idx === activeIndex) {
-          dot.classList.add("active");
-          dot.style.background = "var(--color-acento)";
-        } else {
-          dot.classList.remove("active");
-          dot.style.background = "#ccc";
-        }
-      });
-    };
 
     window.selectModalSize = (size, btn) => {
       const parent = btn.parentElement;
@@ -454,31 +407,11 @@ const Catalog = {
       if (label) label.textContent = colorName;
     };
 
-    const images = this.getCarouselImages(p);
     const title = p.nombre.toUpperCase();
     const bodyHTML = `
       <div class="product-detail-modal-layout" style="display: flex; gap: 30px; align-items: start; flex-wrap: wrap; text-align: left;">
-        <div class="product-detail-img-wrap" style="flex: 1; min-width: 250px; background: var(--color-secundario); border: var(--border-glow); padding: 10px; position: relative;">
-          <!-- Carousel Container -->
-          <div class="modal-carousel-container" style="position: relative; overflow: hidden; width: 100%; height: 320px;">
-            <!-- Carousel Track -->
-            <div id="modal-carousel-track" data-active-index="0" style="display: flex; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); width: 300%; height: 100%; transform: translateX(0%);">
-              <div class="carousel-slide" style="width: 33.333%; height: 100%; flex-shrink: 0;"><img src="${images[0]}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover;"></div>
-              <div class="carousel-slide" style="width: 33.333%; height: 100%; flex-shrink: 0;"><img src="${images[1]}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover;"></div>
-              <div class="carousel-slide" style="width: 33.333%; height: 100%; flex-shrink: 0;"><img src="${images[2]}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover;"></div>
-            </div>
-            
-            <!-- Floating Arrows -->
-            <button onclick="moveModalCarousel(-1)" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: var(--border-glow); background: rgba(255,255,255,0.85); color: var(--color-texto); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; z-index: 10;"><i data-lucide="chevron-left" style="width:18px; height:18px;"></i></button>
-            <button onclick="moveModalCarousel(1)" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: var(--border-glow); background: rgba(255,255,255,0.85); color: var(--color-texto); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; z-index: 10;"><i data-lucide="chevron-right" style="width:18px; height:18px;"></i></button>
-            
-            <!-- Indicators / Dots -->
-            <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10;">
-              <span class="carousel-dot active" style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-acento); transition: 0.2s; display: inline-block;"></span>
-              <span class="carousel-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #ccc; transition: 0.2s; display: inline-block;"></span>
-              <span class="carousel-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #ccc; transition: 0.2s; display: inline-block;"></span>
-            </div>
-          </div>
+        <div class="product-detail-img-wrap" style="flex: 1; min-width: 250px; background: var(--color-secundario); border: var(--border-glow); padding: 10px; position: relative; display: flex; align-items: center; justify-content: center; height: 320px;">
+          <img src="${p.imagen}" alt="${p.nombre}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
         </div>
         <div class="product-detail-info" style="flex: 1.2; min-width: 250px; display: flex; flex-direction: column; gap: 15px;">
           <span style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; color: var(--color-texto-muted); text-transform: uppercase;">${p.categoria}</span>

@@ -215,7 +215,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 460,
     codigoBarras: "7501014",
-    imagen: "assets/img/tshirt_white.png",
+    imagen: "assets/img/tshirt_boxy_acid.png",
     descripcion: "Corte boxy fit pesado con teñido artesanal acid wash y costuras reforzadas a contraste.",
     colores: [
       { nombre: "Gris Ácido",    hex: "#444444" },
@@ -242,7 +242,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 470,
     codigoBarras: "7501016",
-    imagen: "assets/img/tshirt_vintage.png",
+    imagen: "assets/img/tshirt_skate_retro.png",
     descripcion: "Prenda de algodón premium inspirada en la época de oro del skate y hip-hop de los 90s.",
     colores: [
       { nombre: "Mostaza Retro", hex: "#cc8e35" },
@@ -296,7 +296,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 470,
     codigoBarras: "7501020",
-    imagen: "assets/img/tshirt_vintage.png",
+    imagen: "assets/img/tshirt_heavy_tiedye.png",
     descripcion: "Playera pesada en corte boxy con patrón de teñido tie-dye en espiral de tonos carbón.",
     colores: [
       { nombre: "Gris Tie-Dye",  hex: "#718093" },
@@ -335,7 +335,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 480,
     codigoBarras: "7501023",
-    imagen: "assets/img/tshirt_vintage.png",
+    imagen: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=80",
     descripcion: "Acabados deshilachados a mano en cuello y mangas para un look destruido auténtico.",
     colores: [
       { nombre: "Gris Destruido", hex: "#7f8c8d" },
@@ -348,7 +348,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 490,
     codigoBarras: "7501024",
-    imagen: "assets/img/tshirt_techno_grid.png",
+    imagen: "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=500&auto=format&fit=crop&q=80",
     descripcion: "Playera minimalista con gráfico de cuadrícula vectorial en tonos neón reactivos a luz UV.",
     colores: [
       { nombre: "Negro",         hex: "#1e272e" },
@@ -361,7 +361,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 480,
     codigoBarras: "7501025",
-    imagen: "assets/img/tshirt_vintage.png",
+    imagen: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&auto=format&fit=crop&q=80",
     descripcion: "Estampado clásico skate de calavera y huesos cruzados con efecto desgastado retro.",
     colores: [
       { nombre: "Negro Ácido",   hex: "#2c3e50" },
@@ -374,7 +374,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 430,
     codigoBarras: "7501026",
-    imagen: "assets/img/tshirt_graffiti.png",
+    imagen: "https://images.unsplash.com/photo-1554568218-0f1715e72254?w=500&auto=format&fit=crop&q=80",
     descripcion: "Firma de estilo graffiti C&Tees estampada en el pecho con pintura puff en relieve.",
     colores: [
       { nombre: "Blanco",        hex: "#ffffff" },
@@ -414,7 +414,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 420,
     codigoBarras: "7501029",
-    imagen: "assets/img/tshirt_white.png",
+    imagen: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
     descripcion: "Estilo playero retro con franjas de colores cálidos al pecho en algodón ultra-suave.",
     colores: [
       { nombre: "Crema Arena",   hex: "#f5f6fa" },
@@ -428,7 +428,7 @@ const PRODUCTOS_INICIALES = [
     categoria: "Camisetas",
     precio: 380,
     codigoBarras: "7501030",
-    imagen: "assets/img/tshirt_white.png",
+    imagen: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=500&auto=format&fit=crop&q=80",
     descripcion: "Playera esencial de corte regular y tacto de melocotón ideal para combinar en capas.",
     colores: [
       { nombre: "Café Tierra",   hex: "#8c7ae6" },
